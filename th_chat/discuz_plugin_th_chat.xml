@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz]]></item>
-			<item id="version"><![CDATA[2.18e]]></item>
+			<item id="version"><![CDATA[2.19]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -119,24 +119,6 @@
 3 = ทำซ้ำแนวตั้ง
 4 = ทำซ้ำแนวนอนและแนวตั้ง]]></item>
 			</item>
-			<item id="9">
-				<item id="displayorder"><![CDATA[9]]></item>
-				<item id="title"><![CDATA[ระบบ chatpoint]]></item>
-				<item id="description"><![CDATA[สามารถใช้คำสั่ง !point UID|POINT|REASON]]></item>
-				<item id="variable"><![CDATA[chat_point]]></item>
-				<item id="type"><![CDATA[select]]></item>
-				<item id="value"><![CDATA[0]]></item>
-				<item id="extra"><![CDATA[0 = ปิดใช้งาน
-1 = ใช้ extcredits1
-2 = ใช้ extcredits2
-3 = ใช้ extcredits3
-4 = ใช้ extcredits4
-5 = ใช้ extcredits5
-6 = ใช้ extcredits6
-7 = ใช้ extcredits7
-8 = ใช้ extcredits8
-9 = ใช้ POINT สำหรับห้องแชท]]></item>
-			</item>
 			<item id="10">
 				<item id="displayorder"><![CDATA[10]]></item>
 				<item id="title"><![CDATA[ดีเลย์การให้ chatpoint]]></item>
@@ -184,15 +166,6 @@
 				<item id="variable"><![CDATA[chat_strlen]]></item>
 				<item id="type"><![CDATA[number]]></item>
 				<item id="value"><![CDATA[500]]></item>
-				<item id="extra"><![CDATA[]]></item>
-			</item>
-			<item id="16">
-				<item id="displayorder"><![CDATA[16]]></item>
-				<item id="title"><![CDATA[UID ที่ห้ามใช้งานห้องแชท]]></item>
-				<item id="description"><![CDATA[คั่นด้วย , เช่น 221,223,119 หรือสามารถพิมพ์ !ban/!unban ตามด้วย UID เพื่อแบนได้จาก Chatbox]]></item>
-				<item id="variable"><![CDATA[chat_ban]]></item>
-				<item id="type"><![CDATA[text]]></item>
-				<item id="value"><![CDATA[]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="17">
