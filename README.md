@@ -6,7 +6,7 @@
   - ปัจจุบันพัฒนาโดย [popiazaza](https://github.com/popiazaza/2thchat)
   - กระทู้พัฒนาสามารถดูได้ที่ [ดิสคัสอินไทย](https://www.discuz.in.th/thread/5/1/1/)
 
-# วิธีการติดตั้ง
+## วิธีการติดตั้ง
 
 1. ดาวน์โหลดและแตกไฟล์ zip ออกมา
 2. อัปโหลดโฟลเดอร์ที่แตกออกมาไปยัง DISCUZ_ROOT (โฟลเดอร์หลัก Discuz! X)
@@ -31,7 +31,7 @@ $_config['db']['1']['dbcharset'] = 'utf8mb4';
 6. คลิกปุ่ม **ติดตั้ง** ข้างหลังปลั๊กอิน **Chat X Final**
 7. คลิกปุ่ม **ใช้งาน** ข้างหลังปลั๊กอิน **Chat X Final**
 
-# วิธีการอัปเกรด
+## วิธีการอัปเกรด
 
 **สำหรับคนที่ใช้เวอร์ชั่น 2.15 หรือก่อนหน้า ให้ทำตามขั้นตอนการติดตั้งในข้อ 4-5 ก่อน**
 1. ดาวน์โหลดไฟล์ [plugin_th_chat_xxx.zip](https://github.com/popiazaza/2thchat/releases/) แล้วแตกไฟล์ zip ออกมา
@@ -40,7 +40,7 @@ $_config['db']['1']['dbcharset'] = 'utf8mb4';
 4. คลิกปุ่ม **อัปเกรดปลั๊กอิน** ข้างหลังปลั๊กอิน **Chat X Final**
 
 
-# วิธีติดตั้ง DIY addon (ไม่จำเป็น)
+## วิธีติดตั้ง DIY addon (ไม่จำเป็น)
 
 1. ดาวน์โหลดไฟล์ [addon_th_chat_diy.zip](https://github.com/popiazaza/2thchat/releases/) แล้วแตกไฟล์ zip ออกมา
 2. อัปโหลดไฟล์ที่แตกออกมาไปยัง DISCUZ_ROOT (โฟลเดอร์หลัก Discuz! X)
