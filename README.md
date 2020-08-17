@@ -1,3 +1,3 @@
-2TH Chat
+2th Chat
 =======
-Chatbox for Discuz! X
+Chatbox plugin for Discuz! X using jQuery
