@@ -13,6 +13,7 @@
 3. **สำหรับเซิฟเวอร์ที่ไม่ได้ใช้ CHMOD 755 เป็นค่ามาตรฐานของโฟลเดอร์**
 
 CHMOD 755 ไฟลเดอร์ source/plugin/th_chat/img_up
+
 4. **สำหรับ Discuz! X3.4 ที่ต้องการใช้ Emoji ในแชท**
 
 เปิดไฟล์ config/config_global.php
