@@ -34,5 +34,10 @@ EOF;
 	runquery($sql);
 }
 
+if ($_GET['fromversion'] <= "2.20b") {
+	DB::query("ALTER TABLE `pre_newz_data` RENAME `".DB::table('newz_data')."`;");
+	DB::query("ALTER TABLE `pre_newz_nick` RENAME `".DB::table('newz_nick')."`;");
+}
+
 $finish = TRUE;
 ?>
