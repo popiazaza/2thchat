@@ -12,7 +12,7 @@ DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_data')."` (
 	`time` int(10) unsigned NOT NULL,
 	`ip` varchar(25) NOT NULL,
 	PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4;");
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;");
 DB::query("DROP TABLE IF EXISTS `".DB::table('newz_nick')."`;");
 DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_nick')."` (
 	`uid` mediumint(8) unsigned NOT NULL,
@@ -22,7 +22,7 @@ DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_nick')."` (
 	`sound_2` int(1) NOT NULL DEFAULT '1',
 	`ban` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`uid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 DB::query("INSERT INTO `".DB::table('newz_data')."` (`uid`, `touid`, `icon`, `text`, `time`,`ip`) VALUES (1, 0, 'alert', 'ยินดีต้อนรับสู่ห้องแชท คุณสามารถเริ่มพิมพ์ข้อความของคุณได้ด้านล่างนี้~!', ".TIMESTAMP.", '".$_G['clientip']."');");
 $finish = TRUE;
 ?>

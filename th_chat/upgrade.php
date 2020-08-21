@@ -34,9 +34,11 @@ EOF;
 	runquery($sql);
 }
 
-if ($_GET['fromversion'] <= "2.20b") {
+if ($_GET['fromversion'] <= "2.21") {
 	DB::query("ALTER TABLE `pre_newz_data` RENAME `".DB::table('newz_data')."`;");
 	DB::query("ALTER TABLE `pre_newz_nick` RENAME `".DB::table('newz_nick')."`;");
+	DB::query("ALTER TABLE `".DB::table('newz_data')."` ENGINE=InnoDB;");
+	DB::query("ALTER TABLE `".DB::table('newz_nick')."` ENGINE=InnoDB;");
 }
 
 $finish = TRUE;
