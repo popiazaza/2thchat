@@ -8,13 +8,13 @@
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
-			<item id="name"><![CDATA[Chat X Final]]></item>
+			<item id="name"><![CDATA[2th Chat]]></item>
 			<item id="identifier"><![CDATA[th_chat]]></item>
 			<item id="description"><![CDATA[chatroom script]]></item>
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
-			<item id="copyright"><![CDATA[newz]]></item>
-			<item id="version"><![CDATA[2.21]]></item>
+			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
+			<item id="version"><![CDATA[3.0.4]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -26,7 +26,7 @@
 				</item>
 			</item>
 		</item>
-		<item id="version"><![CDATA[X1.0,X1.5,X2.0,X2.5,X3.0,X3.1,X3.2,X3.3,X3.4]]></item>
+		<item id="version"><![CDATA[X1.0,X1.5,X2.0,X2.5,X3.0,X3.1,X3.2,X3.3,X3.4,X3.5]]></item>
 		<item id="license"><![CDATA[]]></item>
 		<item id="installfile"><![CDATA[install.php]]></item>
 		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
@@ -270,6 +270,46 @@
 				<item id="type"><![CDATA[text]]></item>
 				<item id="value"><![CDATA[]]></item>
 				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="34">
+				<item id="displayorder"><![CDATA[34]]></item>
+				<item id="title"><![CDATA[Theme เริ่มต้น]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[default_theme]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[light]]></item>
+				<item id="extra"><![CDATA[light = สว่าง
+dark = มืด]]></item>
+			</item>
+			<item id="35">
+				<item id="displayorder"><![CDATA[35]]></item>
+				<item id="title"><![CDATA[ขนาดตัวอักษรเริ่มต้น]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[default_font_size]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[12px]]></item>
+				<item id="extra"><![CDATA[12px = เล็ก
+14px = กลาง
+16px = ใหญ่]]></item>
+			</item>
+			<item id="36">
+				<item id="displayorder"><![CDATA[36]]></item>
+				<item id="title"><![CDATA[ความสูงของแชทเริ่มต้น]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[default_chat_height]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[400]]></item>
+				<item id="extra"><![CDATA[300 = 300px
+350 = 350px
+400 = 400px
+450 = 450px
+500 = 500px
+550 = 550px
+600 = 600px
+650 = 650px
+700 = 700px
+750 = 750px
+800 = 800px]]></item>
 			</item>
 		</item>
 	</item>

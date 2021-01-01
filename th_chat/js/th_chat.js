@@ -11,6 +11,9 @@ var nzcommandz = '';
 var formhash = '';
 var nzChatPopupContent = '';
 var nzscroll = true;
+var nzChatRoom = 0;
+var nzChatList = 0;
+var nzInterval;
 
 function nzolover() {
 	nzonol = true;
@@ -30,10 +33,10 @@ function nzalert(text) {
 
 nzchatobj.ajaxSetup({
 	timeout: 2000,
-	error: function(jqXHR, textStatus, errorThrown) {
+	error: function (jqXHR, textStatus, errorThrown) {
 		nzalert('เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิฟเวอร์ได้');
-		setTimeout(nzLoadText, nzsetting.reload);
-    }
+		nzResetInterval();
+	}
 });
 
 nzchatobj(function () {
@@ -115,6 +118,21 @@ nzchatobj(function () {
 			});
 		}
 	});
+	nzchatobj('.nzchat_general').click(function () {
+		nzChatList = 0;
+		nzTouid(0);
+		//nzchatobj("#nzchatolcontent").html('<div style="text-align: center;margin-top: 140px;"><img src = "source/plugin/th_chat/images/loading.svg"></div>');
+		nzLoadTextInit();
+		nzchatobj('.nzchat_room').removeClass('nzactive');
+		nzchatobj(this).addClass('nzactive');
+	});
+	nzchatobj('.nzchat_whisper').click(function () {
+		nzChatList = 1;
+		//nzchatobj("#nzchatolcontent").html('<div style="text-align: center;margin-top: 140px;"><img src = "source/plugin/th_chat/images/loading.svg"></div>');
+		nzLoadTextInit();
+		nzchatobj('.nzchat_room').removeClass('nzactive');
+		nzchatobj(this).addClass('nzactive');
+	});
 	if (nzsetting.autoconnect == 1) {
 		nzLoadTextInit();
 	}
@@ -136,7 +154,7 @@ nzchatobj(function () {
 	});
 	nzchatobj('#nzchatcontent').scroll(function () {
 		var objDiv = document.getElementById("nzchatcontent");
-		if (objDiv.scrollHeight - objDiv.scrollTop == nzchatheight) {
+		if (objDiv.scrollHeight - objDiv.scrollTop == nzsetting.chatheight) {
 			nzchatobj("#nznewmessage").hide();
 			objDiv.scrollTop = objDiv.scrollHeight;
 		}
@@ -147,7 +165,7 @@ function nzNotice() {
 	nzcommandz = 'notice';
 	nzchatobj(".nzquoteboxi").html('<div><span class="nzquoteboxh">แก้ไขประกาศ</span>: ' + nzchatobj('#nzchatnotice').html() + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
 	nzchatobj(".nzquoteboxo").show();
-	nzchatobj("#nzchatcontent").css('height',nzchatheight - nzchatobj(".nzquoteboxo").height() - 2);
+	nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight - nzchatobj(".nzquoteboxo").height());
 	nzScrollChat(true);
 	nzchatobj('#nzchatmessage').val(nzchatobj('#nzchatnotice').text());
 	nzchatobj('#nzchatmessage').focus();
@@ -157,40 +175,6 @@ function nzChatPopup(con) {
 	nzChatPopupContent = nzchatobj(con).next(".nzchatpopuph").html();
 	nzchatobj('#th_chat_popup_box').html(nzChatPopupContent);
 	showWindow('th_chat_popup', 'plugin.php?id=th_chat:popup');
-}
-
-function nzChatBig() {
-	if (nzchatheight < 830) {
-		nzchatheight += 50;
-		nzchatobj("#nzchatcontent").animate({
-			height: nzchatheight
-		}, 200);
-		nzchatobj("#nzchatolcontent").animate({
-			height: nzchatheight
-		}, 200);
-	}
-}
-
-function nzChatSmall() {
-	if (nzchatheight > 230) {
-		nzchatheight -= 50;
-		nzchatobj("#nzchatcontent").animate({
-			height: nzchatheight
-		}, 200);
-		nzchatobj("#nzchatolcontent").animate({
-			height: nzchatheight
-		}, 200);
-	}
-}
-
-function nzChatReset() {
-	nzchatheight = nzchatdefaultheight;
-	nzchatobj("#nzchatcontent").animate({
-		height: nzchatheight
-	}, 200);
-	nzchatobj("#nzchatolcontent").animate({
-		height: nzchatheight
-	}, 200);
 }
 
 function nzSend() {
@@ -203,11 +187,12 @@ function nzSend() {
 		nzchatobj("#nzchatmessage").val('');
 		nztime2 = nztime1 + nzsetting.delay;
 		nzchatobj.post("plugin.php?id=th_chat:post" + formhash, {
-			'text': data,
-			'lastid': nzlastid,
-			'touid': nztouid,
-			'quota': nzquota,
-			'command': nzcommandz
+			text: data,
+			lastid: nzlastid,
+			touid: nztouid,
+			quota: nzquota,
+			command: nzcommandz,
+			room: nzChatRoom
 		}, function (data) {
 			if (nzquota > 0 || nzcommandz == 'notice' || nzcommandz.substr(0, 4) == 'edit') {
 				nzTouid(0);
@@ -219,24 +204,28 @@ function nzSend() {
 					eval(data.script);
 				}
 			} else {
-				var listmess = sortObject(data);
-				nzReadyForScroll();
-				nzchatobj.each(listmess, function (k, v) {
-					k = parseInt(k);
-					if (k > nzlastid) {
-						nzlastid = k;
-						nzchatobj("#afterme").before(v);
+				if (nztouid == nzChatRoom) {
+					var listmess = sortObject(data);
+					nzReadyForScroll();
+					nzchatobj.each(listmess, function (k, v) {
+						k = parseInt(k);
+						if (k > nzlastid) {
+							nzlastid = k;
+							nzchatobj("#afterme").before(v);
+							nzScrollChat();
+						}
+					});
+					nzchatobj('.nzinnercontent img').one('load', function () {
 						nzScrollChat();
+					});
+					if (nzsetting.iscleardata == 1) {
+						var nzchatrr = nzchatobj(".nzchatrow");
+						if (nzchatrr.size() > nzsetting.chatrowmax) {
+							nzchatrr.first().remove();
+						}
 					}
-				});
-				nzchatobj('.nzinnercontent img').one('load', function () {
-					nzScrollChat();
-				});
-				if (nzsetting.iscleardata == 1) {
-					var nzchatrr = nzchatobj(".nzchatrow");
-					if (nzchatrr.size() > nzsetting.chatrowmax) {
-						nzchatrr.first().remove();
-					}
+				} else {
+					nzChangeChatRoom(nztouid);
 				}
 			}
 		});
@@ -262,7 +251,7 @@ function nzCommand(command, xid) {
 			nzchatobj(".nzquoteboxi .nztag2").remove();
 			nzchatobj(".nzquoteboxi .nztag3").remove();
 			nzchatobj(".nzquoteboxo").show();
-			nzchatobj("#nzchatcontent").css('height',nzchatheight - nzchatobj(".nzquoteboxo").height() - 2);
+			nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight - nzchatobj(".nzquoteboxo").height());
 			nzScrollChat(true);
 			nzchatobj("#nzchatmessage").val(nzchatobj(".nzquoteboxi .nzinnercontent").text());
 			nzchatobj("#nzchatmessage").focus();
@@ -285,10 +274,13 @@ function nzCommand(command, xid) {
 }
 
 function nzLoadTextInit() {
-	nzchatobj.post("plugin.php?id=th_chat:newinit", function (data) {
+	nzchatobj.post("plugin.php?id=th_chat:newinit", {
+		room: nzChatRoom,
+		list: nzChatList
+	}, function (data) {
 		data = JSON.parse(data);
 		nzlastid = data.lastid;
-		nzchatobj("#nzchatcontent").html('<table class="nzcallrow">' + data.datahtml + '<tr id="afterme"><td colspan="2"></td></tr></table>');
+		nzchatobj("#nzchatcontent").html('<div class="nzcallrow">' + data.datahtml + '<div id="afterme"></div></div>');
 		nzScrollChat(true);
 		nzchatobj('.nzinnercontent img').one('load', function () {
 			nzScrollChat();
@@ -297,9 +289,28 @@ function nzLoadTextInit() {
 			nzchatobj("#nzchatolcontent").html(data.datachatonline);
 		}
 		nzchatobj("#nzoltotal").html(data.chat_online_total);
+		if (data.chat_unread && data.chat_unread > 0) {
+			nzchatobj("#nzunread").html(data.chat_unread);
+			nzchatobj("#nzunread").show();
+		} else {
+			nzchatobj("#nzunread").hide();
+		}
 		nzchatobj("#nzchatnotice").html(data.welcometext);
-		setTimeout(nzLoadText, nzsetting.reload);
+		nzResetInterval();
 	});
+}
+
+function nzResetInterval() {
+	clearInterval(nzInterval);
+	nzInterval = setInterval(nzLoadText, nzsetting.reload);
+}
+
+function nzChangeChatRoom(id) {
+	if (nzChatRoom !== id) {
+		nzChatRoom = id;
+		//nzchatobj("#nzchatolcontent").html('<div style="text-align: center;margin-top: 140px;"><img src = "source/plugin/th_chat/images/loading.svg"></div>');
+		nzLoadTextInit();
+	}
 }
 
 function nzScrollChat(force = false) {
@@ -317,10 +328,10 @@ function nzScrollChat(force = false) {
 
 function nzReadyForScroll() {
 	var objDiv = document.getElementById("nzchatcontent");
-	if(nzchatobj(".nzquoteboxo:visible")){
+	if (nzchatobj(".nzquoteboxo:visible")) {
 		nzscroll = true;
-	}else{
-		if (objDiv.scrollHeight - objDiv.scrollTop == nzchatheight) {
+	} else {
+		if (objDiv.scrollHeight - objDiv.scrollTop == nzsetting.chatheight) {
 			nzscroll = true;
 		} else {
 			nzscroll = false;
@@ -330,7 +341,9 @@ function nzReadyForScroll() {
 
 function nzLoadText() {
 	nzchatobj.post("plugin.php?id=th_chat:new", {
-		'lastid': nzlastid
+		room: nzChatRoom,
+		list: nzChatList,
+		lastid: nzlastid
 	}, function (data) {
 		data = JSON.parse(data);
 		var listmess = sortObject(data.chat_row);
@@ -357,18 +370,28 @@ function nzLoadText() {
 				nzchatobj("#nzchatolcontent").html(data.chat_online);
 			}
 			nzchatobj("#nzoltotal").html(data.chat_online_total);
-			}
-		setTimeout(nzLoadText, nzsetting.reload);
+		}
+		if (data.chat_unread && data.chat_unread > 0) {
+			nzchatobj("#nzunread").html(data.chat_unread);
+			nzchatobj("#nzunread").show();
+		} else {
+			nzchatobj("#nzunread").hide();
+		}
+		nzResetInterval();
 	});
 }
 
 function nzQuota(i) {
 	nzTouid(0);
-	nzchatobj(".nzquoteboxi").html('<div class="nzinnercontent"><div class="nzblockquote">' + nzchatobj("#nzrows_" + i + " .nzuserat2")[0].outerHTML + ': ' + nzchatobj("#nzchatcontent" + i).html() + '</div></div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
+	if (nzchatobj("#nzrows_" + i + " .nzuserat2")[0]) {
+		nzchatobj(".nzquoteboxi").html('<div class="nzinnercontent"><div class="nzblockquote">' + nzchatobj("#nzrows_" + i + " .nzuserat2")[0].outerHTML + ': ' + nzchatobj("#nzchatcontent" + i).html() + '</div></div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
+	} else {
+		nzchatobj(".nzquoteboxi").html('<div class="nzinnercontent"><div class="nzblockquote">' + nzchatobj("#nzchatcontent" + i).html() + '</div></div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
+	}
 	nzchatobj(".nzquoteboxi .nzcq").remove();
 	nzchatobj(".nzquoteboxi .nzuserat2").toggleClass('nzuserat2 nzuserat');
 	nzchatobj(".nzquoteboxo").show();
-	nzchatobj("#nzchatcontent").css('height',nzchatheight - nzchatobj(".nzquoteboxo").height() - 2);
+	nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight - nzchatobj(".nzquoteboxo").height());
 	nzScrollChat(true);
 	nzquota = i;
 	nzchatobj("#nzchatmessage").focus();
@@ -382,20 +405,22 @@ function nzAt(i) {
 function nzTouid(i) {
 	if (i > 0) {
 		nzTouid(0);
-		nzchatobj(".nzquoteboxi").html('<div><span class="nzquoteboxh">กระซิบถึง</span> <img src="uc_server/avatar.php?uid=' + i +'&size=small" class="nzchatavatar" width="32" height="32" onerror="this.src=\'uc_server/images/noavatar_small.gif\';" align="absmiddle"> ' + nzchatobj(".nzat_" + i).last()[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
+		nzchatobj(".nzquoteboxi").html('<div style="margin: 0 auto;"><span class="nzquoteboxh">แชทส่วนตัวกับ</span> <img src="uc_server/avatar.php?uid=' + i + '&size=small" class="nzchatavatar" width="32" height="32" onerror="this.src=\'uc_server/images/noavatar_small.gif\';" align="absmiddle"> ' + nzchatobj(".nzat_" + i).last()[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
 		nzchatobj(".nzquoteboxi .nzcq").remove();
 		nzchatobj(".nzquoteboxi .nzinnercontent").remove();
 		nzchatobj(".nzquoteboxo").show();
-		nzchatobj("#nzchatcontent").css('height',nzchatheight - nzchatobj(".nzquoteboxo").height() - 2);
-		nzScrollChat(true);
+		nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight - nzchatobj(".nzquoteboxo").height());
 		nztouid = i;
+		if (nzChatRoom !== i) {
+			nzChangeChatRoom(i);
+		}
 	} else {
-		nzchatobj("#nzchatcontent").css('height',nzchatheight);
-		if(nzcommandz.substr(0, 4) == 'edit'){
-			if(nzchatobj(".nzquoteboxi .nzinnercontent").text() == nzchatobj('#nzchatmessage').val()){
+		nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight);
+		if (nzcommandz.substr(0, 4) == 'edit') {
+			if (nzchatobj(".nzquoteboxi .nzinnercontent").text() == nzchatobj('#nzchatmessage').val()) {
 				nzchatobj('#nzchatmessage').val('');
 			}
-		}else if(nzcommandz == 'notice'){
+		} else if (nzcommandz == 'notice') {
 			if (nzchatobj('#nzchatmessage').val() == nzchatobj('#nzchatnotice').text()) {
 				nzchatobj('#nzchatmessage').val('');
 			}
@@ -406,10 +431,14 @@ function nzTouid(i) {
 		nztouid = 0;
 		nzquota = 0;
 		nzcommandz = '';
+		if (nzChatRoom > 0) {
+			nzChangeChatRoom(0);
+		}
 	}
 }
 
 function nzReload() {
+	nzTouid(0);
 	nzchatobj("#nzchatolcontent").html('');
 	nzchatobj("#nzchatnotice").html('กำลังโหลดประกาศล่าสุด...');
 	nzchatobj("#nzchatcontent").html('<br /><br /><br /><br /><br /><br /><center><img src="source/plugin/th_chat/images/loading.svg" alt="Load" /></center>');

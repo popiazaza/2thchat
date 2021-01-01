@@ -45,28 +45,43 @@ function chatrow($id,$text,$uid_p,$username,$time,$touid,$icon,$mod){
 	}elseif($icon=='bot'){
 		$tag = '<span class="nztag" style="background:#546E7A">อัตโนมัติ</span>';
 	}
-	if($touid){
-		if($touid == $_G['uid']){
-			$tag = '<span class="nztag" style="background:#FB8C00;cursor:pointer;" onclick="nzTouid('.$uid_p.')">กระซิบ</span>';
-		}else{
-			$tag = '<span class="nztag" style="background:#FB8C00;border-radius:4px 0 0 4px;margin-right:0;cursor:pointer;" onclick="nzTouid('.$touid.')">กระซิบถึง</span><span class="nztag2">'.getat2($touid).'</span>';
-		}
-	}
-	return '<tr class="nzchatrow" id="nzrows_'.$id.'" onMouseOver="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'1\');" onMouseOut="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'0\');">
-<td class="nzavatart">
-	<a href="javascript:void(0);" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid='.$uid_p.'\');return false;"><img src="'.avatar($uid_p,'small',1).'" title="'.$username.'" class="nzchatavatar" onError="this.src=\'uc_server/images/noavatar_small.gif\';" /></a>
-</td>
-<td class="nzcontentt">
-	'.getat2($uid_p).'<span class="nztime" title="'.date("c",$time).'">'.get_date($time).'</span> <span id="nzchatquota'.$id.'" class="nzcq"><a href="javascript:void(0);" onClick="nzQuota('.$id.')">อ้างอิง</a>'.($uid!=$uid_p?' <a href="javascript:void(0);" onclick="nzAt(\''.addslashes($username).'\')">@</a> <a href="javascript:void(0);" onclick="nzTouid('.$uid_p.')">กระซิบ</a> ':'').((($config['editmsg']==1)&&$mod)||(($config['editmsg']==2)&&$mod&&($uid==$uid_p))||(($config['editmsg']==3)&&($uid==$uid_p))?' <a href="javascript:;" onClick=\'nzCommand("edit","'.$id.'");\'>แก้ไข</a>':'').($mod?' <a href="javascript:;" onClick=\'nzCommand("del","'.$id.'");\'>ลบ</a>':'').'</span>
-	<br>
-	<div class="nzinnercontent">'.$tag.$text.'</div>
-</td>
-</tr>
+	if($uid_p == $_G['uid']){
+		return '<div class="nzchatrow" id="nzrows_'.$id.'" onMouseOver="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'1\');" onMouseOut="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'0\');">
+	<div></div>
+	<div class="nzcontentt nzme">
+		<div class="nzchatimenu">
+			<span id="nzchatquota'.$id.'" class="nzcq"><a href="javascript:void(0);" onClick="nzQuota('.$id.')">อ้างอิง</a>'.(($config['editmsg']==1)&&$mod||($config['editmsg']==2)&&$mod||(($config['editmsg']==3))?' <a href="javascript:;" onClick=\'nzCommand("edit","'.$id.'");\'>แก้ไข</a>':'').($mod?' <a href="javascript:;" onClick=\'nzCommand("del","'.$id.'");\'>ลบ</a>':'').'</span>
+			<br>
+			<span class="nztime" title="'.date("c",$time).'">'.get_date($time).'</span>
+		</div>
+		<div class="nzinnercontent">'.$tag.$text.'</div>
+	</div>
+</div>
 <script>nzchatobj("#nzrows_'.$id.' span.nztime").timeago();</script>';
+	}else{
+		return '<div class="nzchatrow" id="nzrows_'.$id.'" onMouseOver="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'1\');" onMouseOut="nzchatobj(\'#nzchatquota'.$id.'\').css(\'opacity\',\'0\');">
+	<div class="nzavatart">
+		<a href="javascript:void(0);" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid='.$uid_p.'\');return false;"><img src="'.avatar($uid_p,'small',1).'" title="'.$username.'" class="nzchatavatar" onError="this.src=\'uc_server/images/noavatar_small.gif\';" /></a>
+	</div>
+	<div class="nzcontentt">
+		'.getat2($uid_p).'
+		<br>
+		<div style="display:flex;align-items:flex-end;">
+		<div class="nzinnercontent">'.$tag.$text.'</div>
+		<div class="nzchatimenu">
+			<span id="nzchatquota'.$id.'" class="nzcq"><a href="javascript:void(0);" onClick="nzQuota('.$id.')">อ้างอิง</a> <a href="javascript:void(0);" onclick="nzAt(\''.addslashes($username).'\')">@</a> <a href="javascript:void(0);" onclick="nzTouid('.$uid_p.')">กระซิบ</a> '.(($config['editmsg']==1)&&$mod?' <a href="javascript:;" onClick=\'nzCommand("edit","'.$id.'");\'>แก้ไข</a>':'').($mod?' <a href="javascript:;" onClick=\'nzCommand("del","'.$id.'");\'>ลบ</a>':'').'</span>
+			<br>
+			<span class="nztime" title="'.date("c",$time).'">'.get_date($time).'</span>
+		</div>
+		</div>
+	</div>
+</div>
+<script>nzchatobj("#nzrows_'.$id.' span.nztime").timeago();</script>';
+	}
 }
 function get_date($timestamp) 
 {
-	$strYear = date("Y",$timestamp)+543;
+	$strYear = substr(date("Y",$timestamp)+543,2,2);
 	$strMonth= date("n",$timestamp);
 	$strDay= date("j",$timestamp);
 	$strHour= date("H",$timestamp);
@@ -74,7 +89,7 @@ function get_date($timestamp)
 	$strSeconds= date("s",$timestamp);
 	$strMonthCut = array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
 	$strMonthThai=$strMonthCut[$strMonth];
-	return "$strDay $strMonthThai $strYear $strHour:$strMinute";
+	return "$strDay $strMonthThai $strYear $strHour:$strMinute น.";
 }
 $time = TIMESTAMP;
 ?>

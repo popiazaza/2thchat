@@ -1,12 +1,16 @@
 <h3 class="flb" id="fctrl_th_chat" style="cursor: move;border-bottom: 1px #bcdff1 solid;background: #d9edf7;"><em id="returnmessage_th_chat">ตั้งค่าห้องแชท</em><span><a title="{lang close}" onclick="hideWindow('th_chat_setting', 0, 1);" class="flbc" href="javascript:;">{lang close}</a></span></h3>
 <style>
 #th_chat_setting_box td{
-width: 120px;
+width: 200px;
 }
 </style>
 <script>
 function nzSaveSetting(){
-	nzchatobj.post("plugin.php?id=th_chat:setting"+formhash, {'sound_1':nzchatobj('input[name=nzsound_1]:checked').val(),'sound_2':nzchatobj('input[name=nzsound_2]:checked').val()},function(data) {
+	nzchatobj.post("plugin.php?id=th_chat:setting"+formhash, {'sound_general':nzchatobj('input[name=sound_general]:checked').val()
+	,'sound_private':nzchatobj('input[name=sound_private]:checked').val()
+	,'theme':nzchatobj('#nzSettingTheme').val()
+	,'font_size':nzchatobj('#nzSettingFontSize').val()
+	,'chat_height':nzchatobj('#nzSettingChatHeight').val()},function(data) {
 		nzchatobj('#nzsettingreply').html(data);
 	});
 }
@@ -15,12 +19,43 @@ function nzSaveSetting(){
 <center>
 <table style="font-size: 14px;">
 <tr>
-<td>เสียงทั่วไป</td>
-<td><input type="radio" value="1" name="nzsound_1" id="nzsound_11" {$olddatas1}><label for="nzsound_11"> เปิด </label><input type="radio" value="0" name="nzsound_1" id="nzsound_10" {$olddatas2}><label for="nzsound_10"> ปิด </label></td>
+<td>เสียงแจ้งเตือนแชททั่วไป</td>
+<td><input type="radio" value="1" name="sound_general" id="sound_general1"<!--{if $setting[sound_general]}--> checked<!--{/if}-->><label for="sound_general1"> เปิด </label><input type="radio" value="0" name="sound_general" id="sound_general0"<!--{if !$setting[sound_general]}--> checked<!--{/if}-->><label for="sound_general0"> ปิด </label></td>
 </tr>
 <tr>
-<td>เสียงกระซิบ</td>
-<td><input type="radio" value="1" name="nzsound_2" id="nzsound_21" {$olddatas3}><label for="nzsound_21"> เปิด </label><input type="radio" value="0" name="nzsound_2" id="nzsound_20" {$olddatas4}><label for="nzsound_20"> ปิด </label></td>
+<td>เสียงแจ้งเตือนแชทส่วนตัว</td>
+<td><input type="radio" value="1" name="sound_private" id="sound_private1"<!--{if $setting[sound_private]}--> checked<!--{/if}-->><label for="sound_private1"> เปิด </label><input type="radio" value="0" name="sound_private" id="sound_private0"<!--{if !$setting[sound_private]}--> checked<!--{/if}-->><label for="sound_private0"> ปิด </label></td>
+</tr>
+<tr>
+<td>Theme</td>
+<td><select id="nzSettingTheme">
+<option value="light"<!--{if $setting[theme] == 'light'}--> selected<!--{/if}-->>สว่าง<!--{if $config[default_theme] == 'light'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="dark"<!--{if $setting[theme] == 'dark'}--> selected<!--{/if}-->>มืด<!--{if $config[default_theme] == 'dark'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+</select></td>
+</tr>
+<tr>
+<td>ขนาดตัวอักษรในห้องแชท</td>
+<td><select id="nzSettingFontSize">
+<option value="12px"<!--{if $setting[font_size] == '12px'}--> selected<!--{/if}-->>เล็ก<!--{if $config[default_font_size] == '12px'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="14px"<!--{if $setting[font_size] == '14px'}--> selected<!--{/if}-->>กลาง<!--{if $config[default_font_size] == '14px'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="16px"<!--{if $setting[font_size] == '16px'}--> selected<!--{/if}-->>ใหญ่<!--{if $config[default_font_size] == '16px'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+</select></td>
+</tr>
+<tr>
+<td>ความสูงของห้องแชท</td>
+<td><select id="nzSettingChatHeight">
+<option value="300"<!--{if $setting[chat_height] == '300'}--> selected<!--{/if}-->>300px<!--{if $config[default_chat_height] == '300'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="350"<!--{if $setting[chat_height] == '350'}--> selected<!--{/if}-->>350px<!--{if $config[default_chat_height] == '350'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="400"<!--{if $setting[chat_height] == '400'}--> selected<!--{/if}-->>400px<!--{if $config[default_chat_height] == '400'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="450"<!--{if $setting[chat_height] == '450'}--> selected<!--{/if}-->>450px<!--{if $config[default_chat_height] == '450'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="500"<!--{if $setting[chat_height] == '500'}--> selected<!--{/if}-->>500px<!--{if $config[default_chat_height] == '500'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="550"<!--{if $setting[chat_height] == '550'}--> selected<!--{/if}-->>550px<!--{if $config[default_chat_height] == '550'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="600"<!--{if $setting[chat_height] == '600'}--> selected<!--{/if}-->>600px<!--{if $config[default_chat_height] == '600'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="650"<!--{if $setting[chat_height] == '650'}--> selected<!--{/if}-->>650px<!--{if $config[default_chat_height] == '650'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="700"<!--{if $setting[chat_height] == '700'}--> selected<!--{/if}-->>700px<!--{if $config[default_chat_height] == '700'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="750"<!--{if $setting[chat_height] == '750'}--> selected<!--{/if}-->>750px<!--{if $config[default_chat_height] == '750'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+<option value="800"<!--{if $setting[chat_height] == '800'}--> selected<!--{/if}-->>800px<!--{if $config[default_chat_height] == '800'}--> (ค่าเริ่มต้น)<!--{/if}--></option>
+</select></td>
 </tr>
 <tr height="20"></tr>
 <tr>

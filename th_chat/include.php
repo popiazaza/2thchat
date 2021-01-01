@@ -38,6 +38,23 @@ $chat['upicme'] = $config['upicme'];
 $chat['quota'] = $config['quota'];
 $chat['chat_strlen'] = $config['chat_strlen'];
 $chat['namemode'] = $config['namemode'];
+$setting_data = DB::fetch_first("SELECT setting FROM ".DB::table('newz_nick')." WHERE uid='{$_G['uid']}'");
+$setting = json_decode($setting_data['setting'],1);
+if(!in_array($setting['theme'],array('light','dark'))){
+	$chat['theme'] =  $config['default_theme'];
+}else{
+	$chat['theme'] = $setting['theme'];
+}
+if(!in_array($setting['font_size'],array('12px','14px','16px'))){
+	$chat['fontsize'] =  $config['default_font_size'];
+}else{
+	$chat['fontsize'] = $setting['font_size'];
+}
+if(!in_array($setting['chat_height'],array('300','350','400','450','500','550','600','650','700','750','800'))){
+	$chat['chatheight'] =  $config['default_chat_height'];
+}else{
+	$chat['chatheight'] = $setting['chat_height'];
+}
 $chat['editor'] = '';
 if($config['usedzc']){
 	$chat['editor'] .= '<a href="javascript:void(0);" title="ตัวหนา" class="fbld" onclick="seditor_insertunit(\'nzchat\', \'[b]\', \'[/b]\')">B</a>

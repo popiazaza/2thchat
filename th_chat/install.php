@@ -11,13 +11,13 @@ DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_data')."` (
 	`text` mediumtext NOT NULL,
 	`time` int(10) unsigned NOT NULL,
 	`ip` varchar(25) NOT NULL,
+	`unread` int(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;");
 DB::query("DROP TABLE IF EXISTS `".DB::table('newz_nick')."`;");
 DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_nick')."` (
 	`uid` mediumint(8) unsigned NOT NULL,
 	`total` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	`time` int(10) unsigned NOT NULL DEFAULT '0',
 	`sound_1` int(1) NOT NULL DEFAULT '0',
 	`sound_2` int(1) NOT NULL DEFAULT '1',
 	`ban` INT(10) UNSIGNED NOT NULL DEFAULT '0',
