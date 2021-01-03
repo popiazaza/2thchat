@@ -155,7 +155,9 @@ $last = DB::insert_id();
 if ($needClear) {
     DB::query("DELETE FROM " . DB::table('newz_data') . " WHERE id<" . $last);
 } else {
-    DB::query("DELETE FROM " . DB::table('newz_data') . " WHERE id<" . ($last - $config['chat_log']));
+	if($config['chat_log']){
+		DB::query("DELETE FROM " . DB::table('newz_data') . " WHERE id<" . ($last - $config['chat_log']));
+	}
 }
 if ($_POST['touid']) {
     $room = intval($_POST['room']);

@@ -2,9 +2,7 @@
 if (!defined('IN_DISCUZ')) {exit('Access Denied');}
 loadcache('plugin');
 $config = $_G['cache']['plugin']['th_chat'];
-$uid = $_G['uid'];
-$is_mod = in_array($_G['adminid'], array(1, 2, 3));
-if ($uid < 1) {
+if ($_G['uid'] < 1) {
     die('Login');
 }
 
@@ -14,7 +12,6 @@ foreach ($fileSystemIterator as $file) {
     {
         unlink(__DIR__ . '/img_up/' . $file->getFilename());
     }
-
 }
 
 $files = glob(__DIR__ . '/img_up/' . $_G['uid'] . '_*');

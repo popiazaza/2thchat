@@ -11,28 +11,32 @@ if ($room) {
     DB::update('newz_data', array(
         'unread' => 0,
     ), "`id`>'$id' AND `unread`=1 AND `uid`='$room' AND `touid`='$uid'");
-    $re = DB::query("SELECT n.*,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
+	$re = DB::query("SELECT n.*,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
 FROM " . DB::table('newz_data') . " n
 LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
 LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
 LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid
 LEFT JOIN " . DB::table('common_usergroup') . " gt ON mt.groupid=gt.groupid
-WHERE  id>{$id} AND ((n.uid='$room' AND n.touid='$uid') OR (n.uid='$uid' AND n.touid='$room'))
+WHERE  id>{$id} AND ((n.touid='$uid') OR (n.uid='$uid' AND n.touid!=0) OR (n.uid='$uid' AND n.touid!=0))
 ORDER BY id DESC LIMIT {$config['chat_init']}");
-} else {
-    $re = DB::query("SELECT n.*,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
-FROM " . DB::table('newz_data') . " n
-LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
-LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
-LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid
-LEFT JOIN " . DB::table('common_usergroup') . " gt ON mt.groupid=gt.groupid
-WHERE  id>{$id} AND (n.touid='0' OR n.touid='$uid')
-ORDER BY id DESC LIMIT {$config['chat_init']}");
-}
 $setting_data = DB::fetch_first("SELECT setting FROM ".DB::table('newz_nick')." WHERE uid='{$_G['uid']}'");
-$setting = json_decode($setting_data['setting'],1);
-$setting['sound_general'] = $setting['sound_general'] == 0 ? 0 : 1;
-$setting['sound_private'] = $setting['sound_private'] == 0 ? 0 : 1;
+}else{
+	$re = DB::query("SELECT n.*,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
+FROM " . DB::table('newz_data') . " n
+LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
+LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
+LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid
+LEFT JOIN " . DB::table('common_usergroup') . " gt ON mt.groupid=gt.groupid
+WHERE  id>{$id} AND ((n.touid='$uid') OR (n.touid=0))
+ORDER BY id DESC LIMIT {$config['chat_init']}");
+$setting_data = DB::fetch_first("SELECT setting FROM ".DB::table('newz_nick')." WHERE uid='{$_G['uid']}'");
+}
+if($setting_data){
+	$setting = json_decode($setting_data['setting'],1);
+}else{
+	$setting['sound_general'] = 1;
+	$setting['sound_private'] = 1;
+}
 $body = array();
 while ($c = DB::fetch($re)) {
     $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '$1', $c['text']);
@@ -46,20 +50,29 @@ while ($c = DB::fetch($re)) {
         $body[$c['id']] .= '<script>nzchatobj("#nzchatnotice").html("' . addslashes($c['text']) . '");</script>';
         continue;
     } elseif ($room != $c['uid'] && $c['touid'] == $uid) {
-        if ($config['pm_sound'] && $sounddata['sound_2']) {
+        if ($config['pm_sound'] && $setting['sound_private']) {
             $body[$c['id']] .= '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>';
-        }
+        }else{
+			$body[$c['id']] = '';
+		}
         continue;
-    }
+    } elseif ($room && $c['touid'] == 0) {
+		if($config['pm_sound'] && $setting['sound_general']){
+			$body[$c['id']] .= '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>';
+		}else{
+			$body[$c['id']] = '';
+		}
+		continue;
+	}
     if ($c['ip'] == 'clear') {
         $seedd = $time . '_' . $uid . '_' . rand(1, 999);
         $c['text'] = '<span style="color:red" id="del_' . $seedd . '">แจ้งเตือน:</span> <span id="nzchatcontent' . $c['id'] . '">ล้างข้อมูล</span><script type="text/javascript">nzchatobj("#del_' . $seedd . '").parent().parent().parent().' . ($config['chat_type'] == 1 ? 'next' : 'prev') . 'Until().remove();</script>';
     } elseif ($c['icon'] == 'alert') {
         $c['text'] = '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     } elseif ($c['touid'] == 0) {
-        $c['text'] = (($config['pm_sound'] && $setting['sound_general']) ? '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>' : '') . '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
+		$c['text'] = (($config['pm_sound'] && $setting['sound_general']) ? '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>' : '') . '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     } elseif ($c['touid'] == $uid) {
-        $c['text'] = (($config['pm_sound'] && $setting['sound_private']) ? '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>' : '') . '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
+		$c['text'] = (($config['pm_sound'] && $setting['sound_private']) ? '<audio autoplay><source src="' . $config['pm_sound'] . '" type="audio/mpeg"></audio>' : '') . '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     } elseif ($c['uid'] == $uid) {
         $c['text'] = '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     }

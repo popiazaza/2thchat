@@ -29,13 +29,10 @@ WHERE n.touid='0' AND n.ip NOT IN ('delete','edit','notice')
 ORDER BY id DESC LIMIT {$config['chat_init']}");
 }
 $body = array();
-$lastid = 0;
+$lastid = DB::fetch_first("SELECT max(id) as lastid FROM ".DB::table('newz_data'));
+$lastid = $lastid['lastid'];
 while ($c = DB::fetch($re)) {
     $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '$1', $c['text']);
-    if ($c['id'] > $lastid) {
-        $lastid = $c['id'];
-    }
-
     if ($c['ip'] == 'delete') {
         continue;
     } elseif ($c['ip'] == 'edit') {

@@ -47,9 +47,12 @@ if($_POST['sound_general']!=""&&$_POST['sound_private']!="")
 	exit('เปลี่ยนการตั้งค่าสำเร็จ!<script>hideWindow("th_chat_setting", 0, 1);nzalert("เปลี่ยนการตั้งค่าสำเร็จ!");</script>');
 }else{
 	$setting_data = DB::fetch_first("SELECT setting FROM ".DB::table('newz_nick')." WHERE uid='{$_G['uid']}'");
-	$setting = json_decode($setting_data['setting'],1);
-	$setting['sound_general'] = $setting['sound_general'] == 0 ? 0 : 1;
-	$setting['sound_private'] = $setting['sound_private'] == 0 ? 0 : 1;
+	if($setting_data){
+		$setting = json_decode($setting_data['setting'],1);
+	}else{
+		$setting['sound_general'] = 1;
+		$setting['sound_private'] = 1;
+	}
 	if(!in_array($setting['theme'],array('light','dark'))){
 		$setting['theme'] =  $config['default_theme'];
 	}

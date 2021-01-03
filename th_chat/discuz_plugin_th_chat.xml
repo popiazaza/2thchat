@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.0.5]]></item>
+			<item id="version"><![CDATA[3.0.6]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -47,35 +47,33 @@
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[chat_init]]></item>
 				<item id="type"><![CDATA[number]]></item>
-				<item id="value"><![CDATA[30]]></item>
+				<item id="value"><![CDATA[50]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="3">
 				<item id="displayorder"><![CDATA[3]]></item>
-				<item id="title"><![CDATA[การ clear ข้อมูลเก่า]]></item>
-				<item id="description"><![CDATA[ถ้ามีไม่มีการ clear ข้อมูล log ของการ chat ทั้งหมดจะถูกเก็บไว้ และอาจจะกระตุกเมื่อ log มีจำนวนมาก (ต้อง reload page ใหม่)
-ถ้ามีการ clear ข้อมูล chat จะรักษาจำนวนแถวไว้ตามจำนวนแถวที่แสดงเริ่มต้น
-*** ถ้ามีการ clear fade affect จะไม่สามารถใช้ได้]]></item>
+				<item id="title"><![CDATA[จำกัดจำนวนข้อความที่แสดงผลในหน้าแชท]]></item>
+				<item id="description"><![CDATA[หากเปิดใช้งานจะลบข้อความเก่าเมื่อมีการแสดงข้อความใหม่
+โดยจำกัดจำนวนข้อความที่แสดงผลไว้ตามจำนวนข้อความที่จะแสดงเริ่มต้น]]></item>
 				<item id="variable"><![CDATA[typechatrow]]></item>
-				<item id="type"><![CDATA[select]]></item>
+				<item id="type"><![CDATA[radio]]></item>
 				<item id="value"><![CDATA[0]]></item>
-				<item id="extra"><![CDATA[0 = ไม่มีการ clear ข้อมูลเก่า
-1 = มีการ clear ข้อมูลเก่า]]></item>
+				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="4">
 				<item id="displayorder"><![CDATA[4]]></item>
-				<item id="title"><![CDATA[จำนวน log ที่จะเก็บไว้สูงสุด]]></item>
+				<item id="title"><![CDATA[จำนวนข้อความในฐานข้อมูลสูงสุด]]></item>
 				<item id="description"><![CDATA[สามารถใช้คำสั่ง !clear เพื่อล้างข้อความทั้งหมดในห้องแชท
-ไม่ควรแก้ไขถ้าคุณเข้าใจมันคืออะไร!]]></item>
+ใส่ 0 ถ้าไม่ต้องการให้ลบข้อความเก่าทิ้ง]]></item>
 				<item id="variable"><![CDATA[chat_log]]></item>
 				<item id="type"><![CDATA[number]]></item>
-				<item id="value"><![CDATA[150]]></item>
+				<item id="value"><![CDATA[0]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="5">
 				<item id="displayorder"><![CDATA[5]]></item>
-				<item id="title"><![CDATA[ที่อยู่ไฟล์เสียง pm]]></item>
-				<item id="description"><![CDATA[เว้นว่างไว้ถ้าไม่ต้องการ]]></item>
+				<item id="title"><![CDATA[ที่อยู่ไฟล์เสียงแจ้งเตือน]]></item>
+				<item id="description"><![CDATA[เว้นว้างไว้หากต้องการปิดการใช้งานเสียงแจ้งเตือน]]></item>
 				<item id="variable"><![CDATA[pm_sound]]></item>
 				<item id="type"><![CDATA[text]]></item>
 				<item id="value"><![CDATA[source/plugin/th_chat/images/msn.mp3]]></item>

@@ -34,7 +34,7 @@ function nzalert(text) {
 nzchatobj.ajaxSetup({
 	timeout: 2000,
 	error: function (jqXHR, textStatus, errorThrown) {
-		nzalert('เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อกับเซิฟเวอร์ได้');
+		nzalert('ขาดเชื่อมต่อกับเซิฟเวอร์ กำลังลองใหม่...');
 		nzResetInterval();
 	}
 });
@@ -200,7 +200,7 @@ function nzSend() {
 			data = JSON.parse(data);
 			if (data.type == 1) {
 				nzalert(data.error);
-				if (data.script == 1) {
+				if (data.script) {
 					eval(data.script);
 				}
 			} else {

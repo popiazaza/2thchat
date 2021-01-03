@@ -53,7 +53,7 @@ $oltotal = 0;
 
 if ($_POST['list']) {
     $chatgroup = array();
-    $re = DB::query("SELECT n.*,MAX(n.id) as maxid,SUM(n.unread) as count,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
+    $re = DB::query("SELECT n.*,MAX(n.id) as maxid,MAX(n.time) as maxtime,SUM(n.unread) as count,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
 FROM " . DB::table('newz_data') . " n
 LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
 LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
@@ -77,7 +77,7 @@ ORDER BY maxid DESC LIMIT {$config['chat_init']}");
                         </div>
                         <div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['touid'] . '" id="nzolpro_' . $r['touid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['tocolor'] ? ';color:' . $r['tocolor'] : '') . '">' . $r['toname'] . '</a><br>
                             <span id="nzchatolr' . $r['touid'] . '">
-                                <span class="nztime" title="' . date("c", $r['time']) . '">' . get_date($r['time']) . '</span>
+                                <span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span>
                                 <script>nzchatobj("#nzchatolr' . $r['touid'] . ' span.nztime").timeago();</script>
                             </span>
                         </div>
@@ -98,7 +98,7 @@ ORDER BY maxid DESC LIMIT {$config['chat_init']}");
                         </div>
                         <div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . $r['name'] . '</a><br>
                             <span id="nzchatolr' . $r['uid'] . '">
-                                ' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['time']) . '">' . get_date($r['time']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
+                                ' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
                             </span>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ ORDER BY maxid DESC LIMIT {$config['chat_init']}");
 		</div><div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . ($r['ban'] ? '<strike>' . $r['username'] . '</strike>' : $r['username']) . '</a><br>
 		<span id="nzchatolr' . $r['uid'] . '">' . $r['grouptitle'] . '</span>
 		<span  id="nzchatolc' . $r['uid'] . '" style="display:none;">
-			' . ($uid == $r['uid'] ? '<a href="javascript:void(0);" onclick="showWindow(\'th_chat_setting\', \'plugin.php?id=th_chat:setting\');return false;">ตั้งค่าห้องแชท</a>' : '<a href="javascript:void(0);" onclick="nzAt(\'' . addslashes($r['username']) . '\')">@</a> <a href="javascript:void(0);" onclick="nzTouid(' . $r['uid'] . ')">กระซิบ</a>') . '
+			' . ($uid == $r['uid'] ? '<a href="javascript:void(0);" onclick="showWindow(\'th_chat_setting\', \'plugin.php?id=th_chat:setting\');return false;">ตั้งค่าห้องแชท</a>' : '<a href="javascript:void(0);" onclick="nzAt(\'' . addslashes($r['username']) . '\')">@</a> <a href="javascript:void(0);" onclick="nzTouid(' . $r['uid'] . ')">แชทส่วนตัว</a>') . '
 		</span>
 		</div>
 		</div></div>';

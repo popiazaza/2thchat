@@ -69,7 +69,7 @@ function chatrow($id,$text,$uid_p,$username,$time,$touid,$icon,$mod){
 		<div style="display:flex;align-items:flex-end;">
 		<div class="nzinnercontent">'.$tag.$text.'</div>
 		<div class="nzchatimenu">
-			<span id="nzchatquota'.$id.'" class="nzcq"><a href="javascript:void(0);" onClick="nzQuota('.$id.')">อ้างอิง</a> <a href="javascript:void(0);" onclick="nzAt(\''.addslashes($username).'\')">@</a> <a href="javascript:void(0);" onclick="nzTouid('.$uid_p.')">กระซิบ</a> '.(($config['editmsg']==1)&&$mod?' <a href="javascript:;" onClick=\'nzCommand("edit","'.$id.'");\'>แก้ไข</a>':'').($mod?' <a href="javascript:;" onClick=\'nzCommand("del","'.$id.'");\'>ลบ</a>':'').'</span>
+			<span id="nzchatquota'.$id.'" class="nzcq"><a href="javascript:void(0);" onClick="nzQuota('.$id.')">อ้างอิง</a> <a href="javascript:void(0);" onclick="nzAt(\''.addslashes($username).'\')">@</a> <a href="javascript:void(0);" onclick="nzTouid('.$uid_p.')">แชทส่วนตัว</a> '.(($config['editmsg']==1)&&$mod?' <a href="javascript:;" onClick=\'nzCommand("edit","'.$id.'");\'>แก้ไข</a>':'').($mod?' <a href="javascript:;" onClick=\'nzCommand("del","'.$id.'");\'>ลบ</a>':'').'</span>
 			<br>
 			<span class="nztime" title="'.date("c",$time).'">'.get_date($time).'</span>
 		</div>
