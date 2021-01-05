@@ -633,3 +633,11 @@ a.nzca:hover {
 #nzchat.nzdark #nzchattable a, #nzchat.nzdark .nzlist a {
     color: #60a2e4;
 }
+#nzchat.nzdark .nzquoteboxh{
+	color: #fff;
+}
+#nzchat.nzdark .nzquoteboxi{
+	background: #4a515e;
+	border-left: 1px solid #333;
+	border-bottom: 1px solid #333;
+}

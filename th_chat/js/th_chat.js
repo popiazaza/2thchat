@@ -242,7 +242,7 @@ function nzCommand(command, xid) {
 			var show = 'ลบข้อความ';
 			var showid = ' ' + nzchatobj("#nzchatcontent" + xid).text();
 		} else if (command == 'edit') {
-			nzTouid(0);
+			nzquota = 0;
 			nzcommandz = 'edit ' + xid;
 			nzchatobj(".nzquoteboxi").html('<div><div class="nzquoteboxh">แก้ไขข้อความ</div>' + nzchatobj("#nzrows_" + xid + " .nzinnercontent")[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
 			nzchatobj(".nzquoteboxi .nzcq").remove();
@@ -404,7 +404,8 @@ function nzAt(i) {
 
 function nzTouid(i) {
 	if (i > 0) {
-		nzTouid(0);
+		nzquota = 0;
+		nzcommandz = '';
 		nzchatobj(".nzquoteboxi").html('<div style="margin: 0 auto;"><span class="nzquoteboxh">แชทส่วนตัวกับ</span> <img src="uc_server/avatar.php?uid=' + i + '&size=small" class="nzchatavatar" width="32" height="32" onerror="this.src=\'uc_server/images/noavatar_small.gif\';" align="absmiddle"> ' + nzchatobj(".nzat_" + i).last()[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
 		nzchatobj(".nzquoteboxi .nzcq").remove();
 		nzchatobj(".nzquoteboxi .nzinnercontent").remove();
@@ -426,7 +427,6 @@ function nzTouid(i) {
 			}
 		}
 		nzchatobj(".nzquoteboxi").html('');
-		nzchatobj("#nztouid").html("");
 		nzchatobj(".nzquoteboxo").hide();
 		nztouid = 0;
 		nzquota = 0;
@@ -438,21 +438,13 @@ function nzTouid(i) {
 }
 
 function nzReload() {
+	nzalert('กำลังรีโหลด...');
+	nzChatList = 0;
+	nzChatRoom = 0;
 	nzTouid(0);
-	nzchatobj("#nzchatolcontent").html('');
-	nzchatobj("#nzchatnotice").html('กำลังโหลดประกาศล่าสุด...');
-	nzchatobj("#nzchatcontent").html('<br /><br /><br /><br /><br /><br /><center><img src="source/plugin/th_chat/images/loading.svg" alt="Load" /></center>');
-	nzchatobj.post("plugin.php?id=th_chat:newinit", function (data) {
-		data = JSON.parse(data);
-		nzlastid = data.lastid;
-		nzchatobj("#nzchatcontent").html('<table class="nzcallrow">' + data.datahtml + '<tr id="afterme" style="display: none;"><td class="nzavatart"></td><td class="nzcontentt"></td></tr></table>');
-		nzScrollChat(true);
-		nzchatobj('.nzinnercontent img').one('load', function () {
-			nzScrollChat();
-		});
-		nzchatobj("#nzchatolcontent").html(data.datachatonline);
-		nzchatobj("#nzchatnotice").html(data.welcometext);
-	});
+	nzchatobj('.nzchat_room').removeClass('nzactive');
+	nzchatobj('.nzchat_general').addClass('nzactive');
+	nzLoadTextInit();
 }
 
 function nzClean() {

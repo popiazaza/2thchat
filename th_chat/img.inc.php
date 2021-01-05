@@ -5,30 +5,46 @@ $config = $_G['cache']['plugin']['th_chat'];
 if ($_G['uid'] < 1) {
     die('Login');
 }
-
-$fileSystemIterator = new FilesystemIterator(__DIR__ . '/img_up');
-foreach ($fileSystemIterator as $file) {
-    if (TIMESTAMP - $file->getCTime() >= 1209600) // 14 days
-    {
-        unlink(__DIR__ . '/img_up/' . $file->getFilename());
-    }
+$maximgsize = 0;
+if(!empty($_G['group']['maxattachsize'])) {
+	$maximgsize = intval($_G['group']['maxattachsize']);
+} else {
+	$maximgsize = @ini_get(upload_max_filesize);
+	$unit = strtolower(substr($maximgsize, -1, 1));
+	$maximgsize = intval($maximgsize);
+	if($unit == 'k') {
+		$maximgsize = $maximgsize*1024;
+	} elseif($unit == 'm') {
+		$maximgsize = $maximgsize*1024*1024;
+	} elseif($unit == 'g') {
+		$maximgsize = $maximgsize*1024*1024*1024;
+	}
 }
-
-$files = glob(__DIR__ . '/img_up/' . $_G['uid'] . '_*');
-if ($files !== false) {
-    $filecount = count($files);
-    if ($filecount > 99) {
-        echo json_encode(array('error' => 'ขออภัย คุณอัปโหลดภาพได้สูงสุด 100 ภาพต่อ 2 สัปดาห์เท่านั้น'));
+$todayimgcount = 0;
+$todayimgsize = 0;
+foreach (glob(__DIR__ . '/img_up/' . $_G['uid'] . '_'.date('Ymd',TIMESTAMP).'*') as $filename) {
+	$todayimgcount++;
+	$todayimgsize += filesize($filename);
+}
+if($_G['group']['maxattachnum']) {
+	if($todayimgcount >= $_G['group']['maxattachnum']){
+		header('Content-Type: application/json');
+		echo json_encode(array('error' => 'ขออภัย กลุ่มสมาชิกของคุณอัปโหลดภาพเพียงวันละ '.$_G['group']['maxattachnum'].' ภาพเท่านั้น'));
         exit();
-    }
+	}
 }
-
+if($_G['group']['maxsizeperday']) {
+	if($todayimgsize >= $_G['group']['maxsizeperday']){
+		header('Content-Type: application/json');
+		echo json_encode(array('error' => 'ขออภัย กลุ่มสมาชิกของคุณอัปโหลดภาพเพียงวันละ '.$_G['group']['maxsizeperday'].' Kb เท่านั้น'));
+        exit();
+	}
+}
 require_once "bulletproof.php";
-
 $image = new Bulletproof\Image($_FILES);
-$image->setSize(1, 1048576);
+$image->setSize(1, $maximgsize);
 $image->setLocation(__DIR__ . "/img_up");
-$image->setName($_G['uid'] . '_' . TIMESTAMP);
+$image->setName($_G['uid'] . '_' . date('YmdHis',TIMESTAMP));
 if ($image["pictures"]) {
     $upload = $image->upload();
     header('Content-Type: application/json');

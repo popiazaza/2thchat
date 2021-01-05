@@ -17,9 +17,7 @@ DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_data')."` (
 DB::query("DROP TABLE IF EXISTS `".DB::table('newz_nick')."`;");
 DB::query("CREATE TABLE IF NOT EXISTS `".DB::table('newz_nick')."` (
 	`uid` mediumint(8) unsigned NOT NULL,
-	`total` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	`sound_1` int(1) NOT NULL DEFAULT '0',
-	`sound_2` int(1) NOT NULL DEFAULT '1',
+	`setting` TEXT NOT NULL DEFAULT '',
 	`ban` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
