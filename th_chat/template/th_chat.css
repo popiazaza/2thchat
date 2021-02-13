@@ -55,7 +55,6 @@
     clear: both;
     padding: 0 8px;
     height: 33px;
-    border-radius: 4px 0 0 0;
     box-sizing: border-box;
     line-height: 33px;
 	border-right: 1px solid #ccc;
@@ -248,7 +247,6 @@ a.nzca:hover {
     text-align: left;
     margin-bottom: 8px;
 	border: 1px solid #ccc;
-	border-radius: 4px;
 	box-sizing: border-box;
 	background: #eaeaea;
 }
@@ -322,6 +320,10 @@ a.nzca:hover {
 	display: flex;
 	align-items: flex-end;
 	justify-content: right;
+}
+
+.nzcontentt.nzme .nzinnercontent {
+    text-align: left;
 }
 
 .nzme .nzinnercontent {
@@ -594,6 +596,10 @@ a.nzca:hover {
     padding: 0 5px;
     line-height: 13px;
 	flex-shrink: 0;
+}
+
+.nzemojit {
+	font-size: 18px;
 }
 
 /* Theme */
