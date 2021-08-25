@@ -39,7 +39,7 @@ if($setting_data){
 }
 $body = array();
 while ($c = DB::fetch($re)) {
-    $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '$1', $c['text']);
+    $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/s', '$1', $c['text']);
     if ($c['ip'] == 'delete') {
         $body[$c['id']] .= '<script>nzchatobj("#nzrows_' . $c['text'] . '").fadeOut(200);</script>';
         continue;

@@ -3,7 +3,9 @@ if (!defined('IN_DISCUZ')) {
     exit('Access Denied');
 }
 if($_G['uid']<1){
-	exit('Please Login');
+	include template('common/header_ajax');
+	echo "<script>nzalert('กรุณาเข้าสู่ระบบก่อน');hideWindow('th_chat_setting', 0, 1);</script>";
+	include template('common/footer_ajax');
 }
 loadcache('plugin');
 $config = $_G['cache']['plugin']['th_chat'];

@@ -6,7 +6,7 @@ $uid = $_G['uid'];
 $is_mod = in_array($_G['adminid'], array(1, 2, 3));
 include 'functions.php';
 $room = intval($_POST['room']);
-if ($room) {
+if ($room && $uid) {
     DB::update('newz_data', array(
         'unread' => 0,
     ), "`unread`=1 AND `uid`='$room' AND `touid`='$uid'");
@@ -32,7 +32,7 @@ $body = array();
 $lastid = DB::fetch_first("SELECT max(id) as lastid FROM ".DB::table('newz_data'));
 $lastid = $lastid['lastid'];
 while ($c = DB::fetch($re)) {
-    $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '$1', $c['text']);
+    $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/s', '$1', $c['text']);
     if ($c['ip'] == 'delete') {
         continue;
     } elseif ($c['ip'] == 'edit') {

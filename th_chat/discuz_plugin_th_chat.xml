@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="ISO-8859-1"?>
 <root>
 	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
-	<item id="Version"><![CDATA[X3.4]]></item>
-	<item id="Time"><![CDATA[2019-1-1 00:00]]></item>
+	<item id="Version"><![CDATA[X3.5]]></item>
+	<item id="Time"><![CDATA[2021-1-1 00:00]]></item>
 	<item id="From"><![CDATA[https://www.discuz.in.th]]></item>
 	<item id="Data">
 		<item id="plugin">
@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.0.9]]></item>
+			<item id="version"><![CDATA[3.1.5]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -117,15 +117,6 @@
 3 = ทำซ้ำแนวตั้ง
 4 = ทำซ้ำแนวนอนและแนวตั้ง]]></item>
 			</item>
-			<item id="10">
-				<item id="displayorder"><![CDATA[10]]></item>
-				<item id="title"><![CDATA[ดีเลย์การให้ chatpoint]]></item>
-				<item id="description"><![CDATA[หน่วยเป็นวินาที]]></item>
-				<item id="variable"><![CDATA[point_time]]></item>
-				<item id="type"><![CDATA[number]]></item>
-				<item id="value"><![CDATA[10]]></item>
-				<item id="extra"><![CDATA[]]></item>
-			</item>
 			<item id="12">
 				<item id="displayorder"><![CDATA[12]]></item>
 				<item id="title"><![CDATA[เวลารีโหลดแชท]]></item>
@@ -150,11 +141,7 @@
 				<item id="description"><![CDATA[สามารถใช้ html ได้, ถ้าปล่อยว่างไว้จะแสดงข้อความแชทปกติ]]></item>
 				<item id="variable"><![CDATA[guest_show]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
-				<item id="value"><![CDATA[<center style="margin:20px 0;">
-<b>กรุณาสมัครสมาชิกหรือเข้าสู่ระบบก่อนใช้งานห้องแชท</b>
-<br />
-<a href="member.php?mod=logging&amp;action=login" onclick="showWindow('login', this.href)">เข้าสู่ระบบ</a> หรือ <a href="member.php?mod=register">สมัครสมาชิก</a>
-</center>]]></item>
+				<item id="value"><![CDATA[]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="15">
@@ -227,7 +214,7 @@
 				<item id="description"><![CDATA[จะมีปุ่มกดเพื่อแสดงวีดีโอแสดงแทนการฝังวีดีโอไว้ในแชท]]></item>
 				<item id="variable"><![CDATA[mediacode]]></item>
 				<item id="type"><![CDATA[radio]]></item>
-				<item id="value"><![CDATA[1]]></item>
+				<item id="value"><![CDATA[0]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 			<item id="24">

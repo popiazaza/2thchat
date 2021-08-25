@@ -52,62 +52,56 @@ $class = 'nzolnor';
 $oltotal = 0;
 
 if ($_POST['list']) {
-    $chatgroup = array();
-    $re = DB::query("SELECT n.*,MAX(n.id) as maxid,MAX(n.time) as maxtime,SUM(n.unread) as count,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
-FROM " . DB::table('newz_data') . " n
-LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
-LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
-LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid
-LEFT JOIN " . DB::table('common_usergroup') . " gt ON mt.groupid=gt.groupid
-WHERE (n.touid='$uid' OR (n.uid='$uid' AND n.touid>0)) AND n.ip NOT IN ('delete','edit','notice')
-GROUP BY `uid`,`touid`
-ORDER BY maxid DESC LIMIT {$config['chat_init']}");
-    while ($r = DB::fetch($re)) {
-        if ($r['uid'] == $_G['uid']) {
-            if (!$chatgroup[$r['touid']]) {
-                $chatgroup[$r['touid']] = '<div class="nzolcon">
-                    <div class="nzolname nzwhisper" onclick="nzTouid(' . $r['touid'] . ')">
-                        <div style="display:inline-block;vertical-align: top;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16" style="padding-top:8px;">
-							  <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-							</svg>
-                        </div>
-						<div style="display:inline-block;vertical-align: top;">
-                            <img src="' . avatar($r['touid'], 'small', 1) . '" title="' . $r['toname'] . '" class="nzchatavatar" onerror="this.src=\'uc_server/images/noavatar_small.gif\';">
-                        </div>
-                        <div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['touid'] . '" id="nzolpro_' . $r['touid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['tocolor'] ? ';color:' . $r['tocolor'] : '') . '">' . $r['toname'] . '</a><br>
-                            <span id="nzchatolr' . $r['touid'] . '">
-                                <span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span>
-                                <script>nzchatobj("#nzchatolr' . $r['touid'] . ' span.nztime").timeago();</script>
-                            </span>
-                        </div>
-                    </div>
-                </div>';
-            }
-        } else {
-            if (!$chatgroup[$r['uid']]) {
-                $chatgroup[$r['uid']] = '<div class="nzolcon">
-                    <div class="nzolname nzwhisper" onclick="nzTouid(' . $r['uid'] . ')">
-						<div style="display:inline-block;vertical-align: top;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16" style="padding-top:8px;">
-							  <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-							</svg>
-                        </div>
-                        <div style="display:inline-block;vertical-align: top;">
-                            <img src="' . avatar($r['uid'], 'small', 1) . '" title="' . $r['name'] . '" class="nzchatavatar" onerror="this.src=\'uc_server/images/noavatar_small.gif\';">
-                        </div>
-                        <div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . $r['name'] . '</a><br>
-                            <span id="nzchatolr' . $r['uid'] . '">
-                                ' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
-                            </span>
-                        </div>
-                    </div>
-                </div>';
+    if ($_G['uid']) {
+        $chatgroup = array();
+        $re = DB::query("SELECT n.*,MAX(n.id) as maxid,MAX(n.time) as maxtime,SUM(n.unread) as count,m.username AS name,mt.username AS toname,g.color,gt.color AS tocolor
+	FROM " . DB::table('newz_data') . " n
+	LEFT JOIN " . DB::table('common_member') . " m ON n.uid=m.uid
+	LEFT JOIN " . DB::table('common_member') . " mt ON n.touid=mt.uid
+	LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid
+	LEFT JOIN " . DB::table('common_usergroup') . " gt ON mt.groupid=gt.groupid
+	WHERE (n.touid='$uid' OR (n.uid='$uid' AND n.touid>0)) AND n.ip NOT IN ('delete','edit','notice')
+	GROUP BY `uid`,`touid`
+	ORDER BY maxid DESC LIMIT {$config['chat_init']}");
+        while ($r = DB::fetch($re)) {
+            if ($r['uid'] == $_G['uid']) {
+                if (!$chatgroup[$r['touid']]) {
+                    $chatgroup[$r['touid']] = '<div class="nzolcon">
+						<div class="nzolname nzwhisper" onclick="nzTouid(' . $r['touid'] . ')">
+							<div style="display:inline-block;vertical-align: top;">
+								<img src="' . avatar($r['touid'], 'small', 1) . '" title="' . $r['toname'] . '" class="nzchatavatar" onerror="this.src=\'uc_server/images/noavatar_small.gif\';">
+							</div>
+							<div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><span class="nznametop2 nzat_' . $r['touid'] . '" id="nzolpro_' . $r['touid'] . '" style="cursor:pointer' . ($r['tocolor'] ? ';color:' . $r['tocolor'] : '') . '">' . $r['toname'] . '</span><br>
+								<span id="nzchatolr' . $r['touid'] . '">
+									<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span>
+									<script>nzchatobj("#nzchatolr' . $r['touid'] . ' span.nztime").timeago();</script>
+								</span>
+							</div>
+						</div>
+					</div>';
+                }
+            } else {
+                if (!$chatgroup[$r['uid']]) {
+                    $chatgroup[$r['uid']] = '<div class="nzolcon">
+						<div class="nzolname nzwhisper" onclick="nzTouid(' . $r['uid'] . ')">
+							<div style="display:inline-block;vertical-align: top;">
+								<img src="' . avatar($r['uid'], 'small', 1) . '" title="' . $r['name'] . '" class="nzchatavatar" onerror="this.src=\'uc_server/images/noavatar_small.gif\';">
+							</div>
+							<div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><span class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . $r['name'] . '</span><br>
+								<span id="nzchatolr' . $r['uid'] . '">
+									' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
+								</span>
+							</div>
+						</div>
+					</div>';
+                }
             }
         }
-    }
-    foreach ($chatgroup as $list) {
-        $body_onlinez .= $list;
+        foreach ($chatgroup as $list) {
+            $body_onlinez .= $list;
+        }
+    } else {
+        $body_onlinez = '<br><div style="color:#fff;text-align:center;">กรุณาเข้าสู่ระบบ<br>เพื่อใช้งานแชทส่วนตัว</div>';
     }
     $oltotal = DB::fetch_first("SELECT count(*) as count FROM " . DB::table('common_session') . " WHERE uid>0 AND invisible=0 AND action IN (2,127) AND fid=0 AND tid=0 AND lastactivity>" . ($time - $timeout));
     $oltotal = $oltotal['count'];
@@ -120,9 +114,23 @@ ORDER BY maxid DESC LIMIT {$config['chat_init']}");
     }
 
     while ($r = DB::fetch($re) or $r = DB::fetch($re2)) {
-        if ($r['groupid'] > 9) {$r['groupid'] = 100 - $r['groupid'];} else if (in_array($r['groupid'], array(4, 5, 6, 9))) {$r['groupid'] = 100;} else if ($r['groupid'] == 7) {$r['groupid'] = 99;} else if ($r['groupid'] == 8) {$r['groupid'] = 98;}
+        if ($r['groupid'] > 9) {
+            $r['groupid'] = 100 - $r['groupid'];
+        } else if (in_array($r['groupid'], array(4, 5, 6, 9))) {
+            $r['groupid'] = 100;
+        } else if ($r['groupid'] == 7) {
+            $r['groupid'] = 99;
+        } else if ($r['groupid'] == 8) {
+            $r['groupid'] = 98;
+        }
         $botid = explode(",", $config['onlinebot']);
-        if (in_array($r['uid'], $botid)) {if (empty($r['lastactivity'])) {$r['lastactivity'] = $time;} else {continue;}}
+        if (in_array($r['uid'], $botid)) {
+            if (empty($r['lastactivity'])) {
+                $r['lastactivity'] = $time;
+            } else {
+                continue;
+            }
+        }
         $r['groupid'] += $time - $r['lastactivity'] > $timeout ? 100 : 0;
         if ($time - $r['lastactivity'] > $timeout) {
             $oltotal = $oltotal - 1;
@@ -133,7 +141,7 @@ ORDER BY maxid DESC LIMIT {$config['chat_init']}");
 		</div><div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><a class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $r['uid'] . '\');return false;" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . ($r['ban'] ? '<strike>' . $r['username'] . '</strike>' : $r['username']) . '</a><br>
 		<span id="nzchatolr' . $r['uid'] . '">' . $r['grouptitle'] . '</span>
 		<span  id="nzchatolc' . $r['uid'] . '" style="display:none;">
-			' . ($uid == $r['uid'] ? '<a href="javascript:void(0);" onclick="showWindow(\'th_chat_setting\', \'plugin.php?id=th_chat:setting\');return false;">ตั้งค่าห้องแชท</a>' : '<a href="javascript:void(0);" onclick="nzAt(\'' . addslashes($r['username']) . '\')">@</a> <a href="javascript:void(0);" onclick="nzTouid(' . $r['uid'] . ')">แชทส่วนตัว</a>') . '
+			' . ($uid == $r['uid'] ? '<a href="javascript:void(0);" onclick="showWindow(\'th_chat_setting\', \'plugin.php?id=th_chat:setting\');return false;">ตั้งค่าห้องแชท</a>' : '<a href="javascript:void(0);" onclick="nzAt(\'' . addslashes($r['username']) . '\')">@</a>' . ($_G['uid'] ? ' <a href="javascript:void(0);" onclick="nzTouid(' . $r['uid'] . ')">แชทส่วนตัว</a>' : '')) . '
 		</span>
 		</div>
 		</div></div>';
