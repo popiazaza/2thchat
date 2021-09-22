@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.1.5]]></item>
+			<item id="version"><![CDATA[3.2.0]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -120,7 +120,7 @@
 			<item id="12">
 				<item id="displayorder"><![CDATA[12]]></item>
 				<item id="title"><![CDATA[เวลารีโหลดแชท]]></item>
-				<item id="description"><![CDATA[หน่วยเป็นมิลลิวินาที (1000 = 1 วินาที ,2000 = 2 วินาที) ยิ่งน้อยยิ่งเร็ว แต่จะยิ่งทำให้ server ทำงานหนัก]]></item>
+				<item id="description"><![CDATA[หน่วยเป็นมิลลิวินาที (1000 = 1 วินาที, 2000 = 2 วินาที) ยิ่งน้อยยิ่งเร็ว แต่จะยิ่งทำให้ server ทำงานหนัก]]></item>
 				<item id="variable"><![CDATA[chat_reload]]></item>
 				<item id="type"><![CDATA[number]]></item>
 				<item id="value"><![CDATA[5000]]></item>
@@ -129,7 +129,7 @@
 			<item id="13">
 				<item id="displayorder"><![CDATA[13]]></item>
 				<item id="title"><![CDATA[ดีเลย์ในแชท (ป้องกันคนฟลัด)]]></item>
-				<item id="description"><![CDATA[หน่วยเป็นมิลลิวินาที (1000 = 1 วินาที ,2000 = 2 วินาที)]]></item>
+				<item id="description"><![CDATA[หน่วยเป็นมิลลิวินาที (1000 = 1 วินาที, 2000 = 2 วินาที)]]></item>
 				<item id="variable"><![CDATA[chat_delay]]></item>
 				<item id="type"><![CDATA[number]]></item>
 				<item id="value"><![CDATA[1000]]></item>
@@ -138,7 +138,7 @@
 			<item id="14">
 				<item id="displayorder"><![CDATA[14]]></item>
 				<item id="title"><![CDATA[ข้อความที่แสดงสำหรับผู้ที่ไม่ได้เข้าสู่ระบบ]]></item>
-				<item id="description"><![CDATA[สามารถใช้ html ได้, ถ้าปล่อยว่างไว้จะแสดงข้อความแชทปกติ]]></item>
+				<item id="description"><![CDATA[สามารถใช้ html ได้, ถ้าปล่อยว่างไว้จะแสดงแชทให้คนที่ไม่ได้เข้าสู่ระบบเห็น]]></item>
 				<item id="variable"><![CDATA[guest_show]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
 				<item id="value"><![CDATA[]]></item>

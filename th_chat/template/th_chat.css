@@ -42,7 +42,7 @@
     height: 33px;
     box-sizing: border-box;
     line-height: 33px;
-	border-right: 1px solid #ccc;
+    border-right: 1px solid #ccc;
 }
 
 .nzchatanno a {
@@ -80,8 +80,8 @@
     width: 200px;
     background: #444753;
     overflow-y: scroll;
-	border-bottom: 1px solid #ccc;
-	box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
 .nzuserat {
@@ -104,6 +104,10 @@
     width: 100%;
     box-sizing: border-box;
     padding: 5px 7px;
+}
+
+#nzchatmessage:focus {
+    outline: none;
 }
 
 #n_copyright {
@@ -139,7 +143,7 @@ div.child {
     display: none;
 }
 
-.nzquoteboxi {
+.nzquoteboxp, .nzquoteboxi {
     background: #eaeaea;
     padding: 5px 10px;
     border-bottom: 1px solid #ccc;
@@ -232,9 +236,9 @@ a.nzca:hover {
 #nzchat {
     text-align: left;
     margin-bottom: 8px;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-	background: #eaeaea;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background: #eaeaea;
 }
 
 .nzchatrow {
@@ -303,9 +307,9 @@ a.nzca:hover {
 
 .nzcontentt.nzme {
     text-align: right;
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-end;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 .nzcontentt.nzme .nzinnercontent {
@@ -440,35 +444,44 @@ a.nzca:hover {
     cursor: pointer;
     width: 24px;
     height: 24px;
-    background: url('../../../../source/plugin/th_chat/images/img.png') #fff;
+    background-image: url('../../../../source/plugin/th_chat/images/img.png');
+    background-color: #eaeaea;
     padding-right: 2px;
+    transition: .2s;
 }
 
 #nzemoji {
     cursor: pointer;
     width: 24px;
     height: 24px;
-    background: url('../../../../source/plugin/th_chat/images/emoji.png') #fff;
+    background-image: url('../../../../source/plugin/th_chat/images/emoji.png');
+    background-color: #eaeaea;
     border-left: 1px solid #ccc;
+    transition: .2s;
+}
+
+#nzemoji:hover,
+#nzimgup:hover {
+    background-color: #fff;
 }
 
 .nzolname {
-    background: #fff;
+    background-color: #fff;
     border-radius: 4px;
     padding: 4px;
 }
 
 .nzolname.nzwhisper {
-	transition:.2s;
+    transition: .2s;
     cursor: pointer;
-	background-color: #fff;
-	background-image: url(/source/plugin/th_chat/images/private.png);
-	background-repeat: no-repeat;
-	background-position:99% 50%;
+    background-color: #fff;
+    background-image: url(/source/plugin/th_chat/images/private.png);
+    background-repeat: no-repeat;
+    background-position: 99% 50%;
 }
 
 .nzolname.nzwhisper:hover {
-	background-color: #ddd;
+    background-color: #dedede;
 }
 
 .nzolcon:nth-child(1) {
@@ -534,8 +547,8 @@ a.nzca:hover {
 .nztag3 {
     color: #F4511E;
     border: 1px solid #F4511E;
-    border-radius: 4px;
-    padding: 0 4px;
+    border-radius: 3px;
+    padding: 1px 2px;
 }
 
 .nzchat_room {
@@ -543,7 +556,7 @@ a.nzca:hover {
     width: 50%;
     height: 33px;
     line-height: 33px;
-	transition:.3s;
+    transition: .3s;
 }
 
 .nzchat_room.nzchat_general {
@@ -557,11 +570,11 @@ a.nzca:hover {
 .nzchat_room.nzactive {
     font-weight: bold;
     background: #444753;
-	color: #fff;
+    color: #fff;
 }
 
 .nzchat_room:not(.nzactive):hover {
-    background: #bbb;
+    background: #afb5c1;
 }
 
 #nzoltotal {
@@ -590,66 +603,80 @@ a.nzca:hover {
     display: inline-block;
     padding: 0 5px;
     line-height: 13px;
-	flex-shrink: 0;
+    flex-shrink: 0;
 }
 
 .nzemojit {
-	font-size: 18px;
+    font-size: 18px;
 }
 
 /* Theme */
-#nzchat.nzdark .nzchatanno{
-	background-color: #1e2126;
-	color: #fff;
-	border-color: #616773;
-}
-#nzchat.nzdark .nztime{
-	color: #ccc;
-}
-#nzchat.nzdark .nzinnercontent, #nzchat.nzdark .nzolname{
-	background:#4a515e;
-	color: #fff;
-}
-#nzchat.nzdark .nzolname.nzwhisper {
-	background-color: #4a515e;
-    background-image: url(/source/plugin/th_chat/images/private_dark.png);
-    background-repeat: no-repeat;
-    background-position: 99% 50%;
-}
-#nzchat.nzdark #nzchatcontent, #nzchat.nzdark #nzchatolcontent{
-	background: #303641;
-	color: #bec0c2;
-}
-#nzchat.nzdark .nzolname.nzwhisper:hover{
-	background-color: #6d7482;
-}
-#nzchat.nzdark .nzinnercontent{
-	box-shadow: none;
-}
-#nzchat.nzdark #nzchatcontent{
-	border-top: 1px solid #333;
-	border-right: 1px solid #333;
-	border-bottom: 1px solid #333;
-}
-#nzchat.nzdark{
-	border: 1px solid #333;
-}
-#nzchat.nzdark .nzchat_room.nzactive{
-	background: #303641;
-}
 #nzchat.nzdark .nzchatanno {
-	border-right: 1px solid #333;
+    background-color: #1e2126;
+    color: #fff;
+    border-color: #616773;
 }
-#nzchat.nzdark #nzchattable a, #nzchat.nzdark .nzlist a {
+
+#nzchat.nzdark .nztime {
+    color: #ccc;
+}
+
+#nzchat.nzdark .nzinnercontent,
+#nzchat.nzdark .nzolname {
+    background-color: #4a515e;
+    color: #fff;
+}
+
+#nzchat.nzdark .nzolname.nzwhisper {
+    background-color: #4a515e;
+}
+
+#nzchat.nzdark #nzchatcontent,
+#nzchat.nzdark #nzchatolcontent {
+    background: #303641;
+    color: #bec0c2;
+}
+
+#nzchat.nzdark .nzolname.nzwhisper:hover {
+    background-color: #5a616f;
+}
+
+#nzchat.nzdark .nzinnercontent {
+    box-shadow: none;
+}
+
+#nzchat.nzdark #nzchatcontent {
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+#nzchat.nzdark {
+    border: 1px solid #333;
+}
+
+#nzchat.nzdark .nzchat_room.nzactive {
+    background: #303641;
+}
+
+#nzchat.nzdark .nzchatanno {
+    border-right: 1px solid #333;
+}
+
+#nzchat.nzdark #nzchattable a,
+#nzchat.nzdark .nzlist a {
     color: #60a2e4;
 }
-#nzchat.nzdark .nzquoteboxh{
-	color: #fff;
+
+#nzchat.nzdark .nzquoteboxh {
+    color: #fff;
 }
-#nzchat.nzdark .nzquoteboxi{
-	background: #4a515e;
-	border-bottom: 1px solid #333;
+
+#nzchat.nzdark .nzquoteboxp, #nzchat.nzdark .nzquoteboxi {
+    background: #4a515e;
+    border-bottom: 1px solid #333;
 }
-#nzchat.nzdark #nzchatolcontent{
-	border-bottom: 1px solid #333;
+
+#nzchat.nzdark #nzchatolcontent {
+    border-bottom: 1px solid #333;
 }
