@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.2.0]]></item>
+			<item id="version"><![CDATA[3.2.1]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[chat]]></item>
@@ -191,7 +191,7 @@
 			</item>
 			<item id="21">
 				<item id="displayorder"><![CDATA[21]]></item>
-				<item id="title"><![CDATA[ใช้งาน Discuz! Code บางส่วนที่ไม่จำเปิด]]></item>
+				<item id="title"><![CDATA[ใช้งาน Discuz! Code บางส่วนที่ไม่จำเป็น]]></item>
 				<item id="description"><![CDATA[จำเป็นหากต้องการเปิดใช้งาน BBCODE ที่เพิ่มขึ้นเอง
 หากเปิดการใช้งานส่วนนี้ โค้ดบางส่วนที่ไม่มีปุ่มก็แสดงผลได้เช่น [table] เป็นต้น]]></item>
 				<item id="variable"><![CDATA[useunshowdzc]]></item>
@@ -202,7 +202,7 @@
 			<item id="22">
 				<item id="displayorder"><![CDATA[22]]></item>
 				<item id="title"><![CDATA[ใช้งานรูปภาพ]]></item>
-				<item id="description"><![CDATA[จะมีปุ่มกดเพื่อแสดงรูปแสดงแทนฝังรูปไว้ในแชท]]></item>
+				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[useimg]]></item>
 				<item id="type"><![CDATA[radio]]></item>
 				<item id="value"><![CDATA[1]]></item>
@@ -211,7 +211,7 @@
 			<item id="23">
 				<item id="displayorder"><![CDATA[23]]></item>
 				<item id="title"><![CDATA[ใช้งาน Media Code]]></item>
-				<item id="description"><![CDATA[จะมีปุ่มกดเพื่อแสดงวีดีโอแสดงแทนการฝังวีดีโอไว้ในแชท]]></item>
+				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[mediacode]]></item>
 				<item id="type"><![CDATA[radio]]></item>
 				<item id="value"><![CDATA[0]]></item>

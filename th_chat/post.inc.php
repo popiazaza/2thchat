@@ -92,7 +92,7 @@ $config['useemo'] = $config['useemo'] ? 0 : 1;
 $config['usedzc'] = $config['usedzc'] ? 0 : 1;
 $config['useunshowdzc'] = $config['useunshowdzc'] ? 0 : 1;
 if ($config['autourl']) {
-    $text = preg_replace('/((http|https):\/\/)?([a-z0-9-]+\.)?[a-z0-9-]+(\.[a-z]{2,6}){1,3}(\/[a-z0-9.,_\/~#&=;%+?-]*)?/is', '[url]$0[/url]', $text);
+    $text = preg_replace('/(?<=^|\s)((http|https):\/\/)([a-z0-9-]+\.)?[a-z0-9-]+(\.[a-z]{2,6}){1,3}(\/[a-z0-9.,_\/~#&=;%+?-]*)?/is', '[url]$0[/url]', $text);
 }
 preg_match_all('/\[url\]'.str_replace('/','\/',preg_quote($_G['siteurl'])).'(.*?)\[\/url\]/s', $text, $urls, PREG_SET_ORDER);
 foreach($urls as $url){
@@ -127,7 +127,7 @@ while ($bw = DB::fetch($query_bw)) {
     $text = str_replace($bw['find'], $bw['replacement'], $text);
 }
 $text = preg_replace('/\[quota\](.*?)\[\/quota\]/s', '[quota]$1[[color=#fff][/color]/quota]', $text);
-$text = str_replace("[media]", "[media=x,640,480]", $text);
+$text = str_replace("[media]", "[media=x,320,180]", $text);
 if ($config['usemore']) {$usemore = -$_G['groupid'];} else { $usemore = 1;}
 $text = discuzcode($text, $config['useemo'], $config['usedzc'], $config['usehtml'], 1, $usemore, $config['useimg'], 1, 0, $config['useunshowdzc'], 0, $config['mediacode']);
 if ($ip == 'notice') {

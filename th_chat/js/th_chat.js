@@ -40,11 +40,14 @@ nzchatobj.ajaxSetup({
 
 nzchatobj(function () {
 	nzchatobj("#nzchatmessage").keydown(function (event) {
-		if (event.keyCode == '13') {
+		if (event.key == 'Enter') {
 			nzSend();
-		}
-		if (event.keyCode == '27') {
+		} else if (event.key == 'Escape') {
 			nzTouid(0);
+		} else if (event.key == 'ArrowUp') {
+			if (nzchatobj('.nzchatrow:last').length) {
+				nzCommand('edit', nzchatobj('.nzchatrow:last').attr('id').substr(7));
+			}
 		}
 	});
 	nzchatobj('#nzchatmessage').bind('paste', function (e) {
@@ -145,11 +148,6 @@ nzchatobj(function () {
 	});
 	nzchatobj('#nznewmessage').click(function () {
 		nzScrollChat(true);
-	});
-	nzchatobj("#nzchatmessage").keydown(function (event) {
-		if (event.keyCode == '13') {
-			nzSend();
-		}
 	});
 	nzchatobj('#nzchatcontent').scroll(function () {
 		var objDiv = document.getElementById("nzchatcontent");
@@ -400,7 +398,7 @@ function nzTouid(i) {
 	nzcommandz = '';
 	nzchatobj(".nzquoteboxi").hide();
 	if (i > 0) {
-		nzchatobj(".nzquoteboxp").html('<div style="margin: 0 auto;"><span class="nzquoteboxh">แชทส่วนตัวกับ</span> <img src="uc_server/avatar.php?uid=' + i + '&size=small" class="nzchatavatar" width="32" height="32" onerror="this.src=\'uc_server/images/noavatar_small.gif\';" align="absmiddle"> ' + nzchatobj(".nzat_" + i).last()[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
+		nzchatobj(".nzquoteboxp").html('<div style="margin: 0 auto;line-height: 30px;"><span class="nzquoteboxh">แชทส่วนตัวกับ</span> <img src="uc_server/avatar.php?uid=' + i + '&size=small" class="nzchatavatar" width="32" height="32" onerror="this.src=\'uc_server/images/noavatar_small.gif\';"> ' + nzchatobj(".nzat_" + i).last()[0].outerHTML + '</div><div class="nzcancel" onclick="nzTouid(0)" title="ยกเลิก"></div>');
 		nzchatobj(".nzquoteboxp").show();
 		nzchatobj(".nzquoteboxo").show();
 		nzchatobj("#nzchatcontent").css('height', nzsetting.chatheight - nzchatobj(".nzquoteboxo").height());
