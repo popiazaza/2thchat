@@ -14,10 +14,10 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.2.1]]></item>
+			<item id="version"><![CDATA[3.3.6]]></item>
 			<item id="__modules">
 				<item id="0">
-					<item id="name"><![CDATA[chat]]></item>
+					<item id="name"><![CDATA[hook]]></item>
 					<item id="menu"><![CDATA[]]></item>
 					<item id="url"><![CDATA[]]></item>
 					<item id="type"><![CDATA[11]]></item>
@@ -295,6 +295,30 @@ dark = มืด]]></item>
 700 = 700px
 750 = 750px
 800 = 800px]]></item>
+			</item>
+			<item id="37">
+				<item id="displayorder"><![CDATA[37]]></item>
+				<item id="title"><![CDATA[ส่งข้อความแจ้งเตือนเมื่อมีกระทู้ใหม่]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[new_post]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[0]]></item>
+				<item id="extra"><![CDATA[3 = ปิดไม่ให้แจ้งเตือน
+1 = ส่งแจ้งเตือนทุกครั้งที่มีกระทู้ใหม่
+2 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ส่ง
+3 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ไมส่ง]]></item>
+			</item>
+			<item id="38">
+				<item id="displayorder"><![CDATA[38]]></item>
+				<item id="title"><![CDATA[ส่งข้อความแจ้งเตือนเมื่อมีการแก้ไขกระทู้]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[edit_post]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[2]]></item>
+				<item id="extra"><![CDATA[0 = ปิดไม่ให้แจ้งเตือน
+1 = ส่งแจ้งเตือนทุกครั้งที่มีการแก้ไขกระทู้
+2 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ส่ง
+3 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ไมส่ง]]></item>
 			</item>
 		</item>
 	</item>
