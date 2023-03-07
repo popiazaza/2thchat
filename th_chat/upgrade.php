@@ -51,19 +51,19 @@ if ($_GET['fromversion'] <= "3.0.0") {
 
 if ($_GET['fromversion'] <= "3.0.1") {
     DB::query("ALTER TABLE `" . DB::table('newz_nick') . "` ADD `setting` TEXT NOT NULL DEFAULT '' AFTER `sound_2`;");
-	$previous_setting_query = DB::query("SELECT * FROM " . DB::table('newz_nick'));
-	while ($previous_setting_fetch = DB::fetch($previous_setting_query)) {
-		DB::update('newz_nick', array(
-			'setting' => 
-			json_encode(
-				array(
-					'sound_general' => $previous_setting_fetch['sound_1'],
-					'sound_private' => $previous_setting_fetch['sound_2']
-				)
-			)
-		), "`uid`='".$previous_setting_fetch['uid']."'");
-	}
-	DB::query("ALTER TABLE `" . DB::table('newz_nick') . "` DROP `total`, DROP `sound_1`, DROP `sound_2`;");
+    $previous_setting_query = DB::query("SELECT * FROM " . DB::table('newz_nick'));
+    while ($previous_setting_fetch = DB::fetch($previous_setting_query)) {
+        DB::update('newz_nick', array(
+            'setting' =>
+            json_encode(
+                array(
+                    'sound_general' => $previous_setting_fetch['sound_1'],
+                    'sound_private' => $previous_setting_fetch['sound_2']
+                )
+            )
+        ), "`uid`='" . $previous_setting_fetch['uid'] . "'");
+    }
+    DB::query("ALTER TABLE `" . DB::table('newz_nick') . "` DROP `total`, DROP `sound_1`, DROP `sound_2`;");
 }
 
 $finish = true;

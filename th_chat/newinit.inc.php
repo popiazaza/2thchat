@@ -1,5 +1,7 @@
 <?php
-if (!defined('IN_DISCUZ')) {exit('Access Denied');}
+if (!defined('IN_DISCUZ')) {
+    exit('Access Denied');
+}
 loadcache('plugin');
 $config = $_G['cache']['plugin']['th_chat'];
 $uid = $_G['uid'];
@@ -29,7 +31,7 @@ WHERE n.touid='0' AND n.ip NOT IN ('delete','edit','notice')
 ORDER BY id DESC LIMIT {$config['chat_init']}");
 }
 $body = array();
-$lastid = DB::fetch_first("SELECT max(id) as lastid FROM ".DB::table('newz_data'));
+$lastid = DB::fetch_first("SELECT max(id) as lastid FROM " . DB::table('newz_data'));
 $lastid = $lastid['lastid'];
 while ($c = DB::fetch($re)) {
     $c['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/s', '$1', $c['text']);
