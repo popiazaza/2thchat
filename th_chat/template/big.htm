@@ -7,7 +7,8 @@
 <!--{else}-->
 <script src="source/plugin/th_chat/js/jquery-3.6.3.min.js"></script>
 <script src="source/plugin/th_chat/js/jquery.timeago.js"></script>
-<script src="source/plugin/th_chat/js/emoji-button-2.12.1.min.js" type="module"></script>
+<script src="source/plugin/th_chat/js/picmo.js"></script>
+<script src="source/plugin/th_chat/js/picmo-popup.js"></script>
 <link rel="stylesheet" type="text/css" href="{$_G[setting][csspath]}{STYLEID}_forum_viewthread.css?{VERHASH}" />
 <link rel="stylesheet" type="text/css"
   href="source/plugin/th_chat/template/th_chat.min.css?v=<!--{$_G['setting']['plugins']['version']['th_chat']}-->" />
@@ -15,7 +16,7 @@
   <style type="text/css">
     #nzchatcontent {
       height: {$chat['chatheight']}px;
-	  font-size: {$chat['fontsize']};
+	    font-size: {$chat['fontsize']};
       {$chat['bgcss']}
     }
     #nzchatolcontent {
@@ -29,7 +30,8 @@
       delay: {$chat['delay']},
       chatrowmax: {$chat['chatrowmax']},
       reload: {$chat['reload']},
-	  chatheight: {$chat['chatheight']},
+	    chatheight: {$chat['chatheight']},
+      theme: '{$chat['theme']}',
     };
   </script>
   <script src="source/plugin/th_chat/js/th_chat.min.js?v=<!--{$_G['setting']['plugins']['version']['th_chat']}-->"></script>

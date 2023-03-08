@@ -142,13 +142,24 @@ nzchatobj(function () {
   if (nzsetting.autoconnect == 1) {
     nzLoadTextInit();
   }
-  const button = nzchatobj("#nzemoji");
-  const picker = new EmojiButton();
-  picker.on("emoji", (emoji) => {
-    nzchatobj("#nzchatmessage").val(nzchatobj("#nzchatmessage").val() + emoji);
+  const nzemoji = document.querySelector('#nzemoji');
+  const nzpicker = picmoPopup.createPopup(
+    {
+      rootElement: document.querySelector('#nzchat'),
+      theme: `picmo__${nzsetting.theme}`
+    },
+    {
+      referenceElement: nzemoji,
+      triggerElement: nzemoji,
+    }
+  );
+  nzpicker.addEventListener("emoji:select", (selection) => {
+    nzchatobj("#nzchatmessage").val(
+      nzchatobj("#nzchatmessage").val() + selection.emoji
+    );
   });
-  nzchatobj("#nzemoji").click(function () {
-    picker.togglePicker(this);
+  nzchatobj("#nzemoji").on('click',function () {
+    nzpicker.toggle();
   });
   nzchatobj("#nznewmessage").click(function () {
     nzScrollChat(true);
