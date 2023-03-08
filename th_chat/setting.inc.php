@@ -15,7 +15,7 @@ if ($_POST['sound_general'] != "" && $_POST['sound_private'] != "") {
 	$setting['sound_general'] = $_POST['sound_general'] == 1 ? 1 : 0;
 	$setting['sound_private'] = $_POST['sound_private'] == 1 ? 1 : 0;
 	if (in_array($_POST['theme'], array('light', 'dark'))) {
-		echo '<script>nzchatobj("#nzchat").removeClass();nzchatobj("#nzchat").addClass("nz' . $_POST['theme'] . '");</script>';
+		echo '<script>nzchatobj("#nzchat").removeClass().addClass("nz' . $_POST['theme'] . '");</script>';
 		$setting['theme'] =  $_POST['theme'];
 	}
 	if (in_array($_POST['font_size'], array('12px', '14px', '16px'))) {
