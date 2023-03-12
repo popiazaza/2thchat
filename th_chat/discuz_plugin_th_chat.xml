@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.3.7]]></item>
+			<item id="version"><![CDATA[3.3.8]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[hook]]></item>
@@ -319,6 +319,24 @@ dark = มืด]]></item>
 1 = ส่งแจ้งเตือนทุกครั้งที่มีการแก้ไขกระทู้
 2 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ส่ง
 3 = ให้เลือกส่งได้โดยมีค่าเริ่มต้นเป็น ไมส่ง]]></item>
+			</item>
+			<item id="39">
+				<item id="displayorder"><![CDATA[39]]></item>
+				<item id="title"><![CDATA[หมวดหมู่เว็บบอร์ดที่ให้มีการแจ้งเตือนได้]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[category_post]]></item>
+				<item id="type"><![CDATA[forums]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="40">
+				<item id="displayorder"><![CDATA[40]]></item>
+				<item id="title"><![CDATA[แสดงหมวดหมู่เว็บบอร์ดในข้อความแจ้งเตือน]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[show_category]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[]]></item>
+				<item id="extra"><![CDATA[]]></item>
 			</item>
 		</item>
 	</item>
