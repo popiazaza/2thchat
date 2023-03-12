@@ -335,7 +335,7 @@ dark = มืด]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[show_category]]></item>
 				<item id="type"><![CDATA[radio]]></item>
-				<item id="value"><![CDATA[]]></item>
+				<item id="value"><![CDATA[0]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
 		</item>
