@@ -42,7 +42,7 @@ class plugin_th_chat_forum
 		if ($config['new_post'] > 0 && $args['param'][0] == 'post_newthread_succeed') {
 			$forums = unserialize($config['category_post']);
 			if (in_array($args['param'][2]['fid'], $forums)) {
-				if ($config['new_post'] == 2 || $_POST['th_chat_notify']) {
+				if ($config['new_post'] == 1 || $_POST['th_chat_notify']) {
 					if ($post = DB::fetch_first("SELECT * FROM " . DB::table('forum_post') . " WHERE `fid` = " . $args['param'][2]['fid'] . " AND `tid` = " . $args['param'][2]['tid'] . " AND `pid` = " . $args['param'][2]['pid'])) {
 						$msg = "โพสต์ <a target=\"_blank\" href=\"forum.php?mod=viewthread&tid=" . $post['tid'] . "\">" . addslashes($post['subject']) . "</a>";
 						if ($config['show_category']) {
@@ -56,7 +56,7 @@ class plugin_th_chat_forum
 		} else if ($config['edit_post'] > 0 && $args['param'][0] == 'post_edit_succeed') {
 			$forums = unserialize($config['category_post']);
 			if (in_array($args['param'][2]['fid'], $forums)) {
-				if ($config['edit_post'] == 2 || $_POST['th_chat_notify']) {
+				if ($config['edit_post'] == 1 || $_POST['th_chat_notify']) {
 					if ($post = DB::fetch_first("SELECT * FROM " . DB::table('forum_post') . " WHERE `fid` = " . $args['param'][2]['fid'] . " AND `tid` = " . $args['param'][2]['tid'] . " AND `pid` = " . $args['param'][2]['pid'])) {
 						$msg = "อัปเดตโพสต์ <a target=\"_blank\" href=\"forum.php?mod=viewthread&tid=" . $post['tid'] . "\">" . addslashes($post['subject']) . "</a>";
 						if ($config['show_category']) {
