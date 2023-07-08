@@ -28,8 +28,8 @@ $newz_nick = DB::fetch_first("SELECT * FROM " . DB::table('newz_nick') . " WHERE
 if ($newz_nick['ban']) {
     error_response('ขออภัย คุณถูกแบนอยู่');
 }
-if ($config['chat_delay']) {
-    $last_msg = DB::fetch_first("SELECT `time` FROM " . DB::table('newz_data') . " WHERE `uid`='{$uid}' AND `icon`!='alert' AND `ip` NOT IN ('delete','notice','clear','edit') ORDER BY `time` DESC LIMIT 1");
+if (!$is_mod && $config['chat_delay']) {
+    $last_msg = DB::fetch_first("SELECT `time` FROM " . DB::table('newz_data') . " WHERE `uid`='{$uid}' ORDER BY `time` DESC LIMIT 1");
     if ($last_msg['time'] > (TIMESTAMP - ceil($config['chat_delay'] / 1000))) {
         error_response('ขออภัย คุณส่งข้อความบ่อยไป');
     }
