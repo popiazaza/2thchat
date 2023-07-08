@@ -15,13 +15,18 @@ $newz_nick = DB::fetch_first("SELECT * FROM " . DB::table('newz_nick') . " WHERE
 if ($newz_nick['ban']) {
     die(json_encode(array('type' => 1, 'error' => 'ขออภัย คุณถูกแบนอยู่')));
 }
+if ($config['chat_delay']) {
+    $last_msg = DB::fetch_first("SELECT `time` FROM " . DB::table('newz_data') . " WHERE `uid`='{$uid}' ORDER BY `time` DESC LIMIT 1");
+    if ($last_msg['time'] > (TIMESTAMP - ceil($config['chat_delay'] / 1000))) {
+        die(json_encode(array('type' => 1, 'error' => 'ขออภัย คุณส่งข้อความบ่อยไป')));
+    }
+}
 $text = $_POST['text'];
 $id = intval($_POST['lastid']);
 $touid = intval($_POST['touid']);
 $quota = intval($_POST['quota']);
 $command = $_POST['command'];
 $ip = $_G['clientip'];
-$a = file_get_contents(DISCUZ_ROOT . '/source/plugin/th_chat/template/big.htm');
 if (substr($text, 0, 4) == "!del" && $is_mod) {
     $id = intval(substr($text, 4));
     DB::query("DELETE FROM " . DB::table('newz_data') . " WHERE id=$id LIMIT 1");
