@@ -39,11 +39,10 @@ if ($_POST['sound_general'] != "" && $_POST['sound_private'] != "") {
 	if ($uid < 1) {
 		die('Login');
 	}
-	$re = DB::query("SELECT * FROM " . DB::table('newz_nick') . " WHERE uid='{$uid}'");
-	if ($re = DB::fetch($re)) {
-		DB::query("UPDATE " . DB::table('newz_nick') . " SET setting='{$setting}' WHERE uid='{$uid}' LIMIT 1");
+	if (DB::fetch_first("SELECT * FROM " . DB::table('newz_nick') . " WHERE uid='{$uid}'")) {
+		DB::update('newz_nick', array('setting' => $setting), DB::field('uid', $uid));
 	} else {
-		DB::query("INSERT INTO " . DB::table('newz_nick') . " (uid,setting) VALUES ('{$uid}','{$setting}')");
+		DB::insert('newz_nick', array('uid' => $uid, 'setting' => $setting));
 	}
 	exit('เปลี่ยนการตั้งค่าสำเร็จ!<script>hideWindow("th_chat_setting", 0, 1);nzalert("เปลี่ยนการตั้งค่าสำเร็จ!");</script>');
 } else {

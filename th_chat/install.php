@@ -21,5 +21,15 @@ DB::query("CREATE TABLE IF NOT EXISTS `" . DB::table('newz_nick') . "` (
 	`ban` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-DB::query("INSERT INTO `" . DB::table('newz_data') . "` (`uid`, `touid`, `icon`, `text`, `time`,`ip`) VALUES (1, 0, 'alert', 'ยินดีต้อนรับสู่ห้องแชท คุณสามารถเริ่มพิมพ์ข้อความของคุณได้ด้านล่างนี้~!', " . TIMESTAMP . ", '" . $_G['clientip'] . "');");
+DB::insert(
+	'newz_data',
+	array(
+		'uid' => 1,
+		'touid' => 0,
+		'icon' => 'alert',
+		'text' => 'ยินดีต้อนรับสู่ห้องแชท คุณสามารถเริ่มพิมพ์ข้อความของคุณได้ด้านล่า งนี้~!',
+		'time' => TIMESTAMP,
+		'ip' => $_G['clientip']
+	)
+);
 $finish = TRUE;

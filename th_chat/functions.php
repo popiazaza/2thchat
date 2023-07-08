@@ -1,7 +1,6 @@
 <?php
 function getat($attextn)
 {
-	global $config;
 	if (preg_match_all('/@(.*?)(\s|\z)/', $attextn, $atmatch)) {
 		foreach ($atmatch[1] as $atvalue) {
 			$atuser = DB::fetch_first("SELECT m.uid,m.groupid,g.color FROM " . DB::table('common_member') . " m LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid WHERE m.username='{$atvalue}' LIMIT 1");
@@ -17,21 +16,18 @@ function getat($attextn)
 }
 function getat2($uid)
 {
-	global $config;
 	$atuser = DB::fetch_first("SELECT m.uid,m.username,m.groupid,g.color FROM " . DB::table('common_member') . " m LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid WHERE m.uid='{$uid}' LIMIT 1");
 	$attext = '<a class="nzuserat2 nzat_' . $atuser['uid'] . '" onclick="showWindow(\'th_chat_profile\', \'plugin.php?id=th_chat:profile&uid=' . $uid . '\');return false;"' . ($atuser['color'] ? ' style="color:' . $atuser['color'] . '"' : '') . '>' . $atuser['username'] . '</a>';
 	return $attext;
 }
 function getat3($uid)
 {
-	global $config;
 	$atuser = DB::fetch_first("SELECT m.uid,m.username,m.groupid,g.color FROM " . DB::table('common_member') . " m LEFT JOIN " . DB::table('common_usergroup') . " g ON m.groupid=g.groupid WHERE m.uid='{$uid}' LIMIT 1");
 	$attext = '<a class="nzuserat nzat_' . $atuser['uid'] . '" onclick="nzAt(\'' . addslashes($atuser['username']) . '\');"' . ($atuser['color'] ? ' style="color:' . $atuser['color'] . '"' : '') . '>' . $atuser['username'] . '</a>';
 	return $attext;
 }
 function getquota($quota)
 {
-	global $config;
 	if ($quo = DB::query("SELECT uid,text FROM " . DB::table('newz_data') . " WHERE id='" . $quota . "'")) {
 		$quo = DB::fetch($quo);
 		$quo['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '', $quo['text']);
@@ -42,7 +38,7 @@ function getquota($quota)
 }
 function chatrow($id, $text, $uid_p, $username, $time, $touid, $icon, $mod)
 {
-	global $uid, $config, $_G;
+	global $config, $_G;
 	$tag = '';
 	if ($icon == 'alert') {
 		$tag = '<span class="nztag" style="background:#e53935">แจ้งเตือน</span>';

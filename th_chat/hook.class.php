@@ -49,7 +49,17 @@ class plugin_th_chat_forum
 							$cat = DB::fetch_first("SELECT * FROM " . DB::table('forum_forum') . " WHERE `fid` = " . $post['fid']);
 							$msg .= " ใน <a target=\"_blank\" href=\"forum.php?mod=forumdisplay&fid=" . $post['fid'] . "\">" . addslashes($cat['name']) . "</a>";
 						}
-						DB::query("INSERT INTO " . DB::table('newz_data') . " (uid,touid,icon,text,time,ip) VALUES (" . $_G['uid'] . ",0,'bot','" . $msg . "'," . time() . ",'" . $_G['clientip'] . "')");
+						DB::insert(
+							'newz_data',
+							array(
+								'uid' => $_G['uid'],
+								'touid' => 0,
+								'icon' => 'bot',
+								'text' => $msg,
+								'time' => time(),
+								'ip' => $_G['clientip']
+							)
+						);
 					}
 				}
 			}
@@ -63,7 +73,17 @@ class plugin_th_chat_forum
 							$cat = DB::fetch_first("SELECT * FROM " . DB::table('forum_forum') . " WHERE `fid` = " . $post['fid']);
 							$msg .= " ใน <a target=\"_blank\" href=\"forum.php?mod=forumdisplay&fid=" . $post['fid'] . "\">" . addslashes($cat['name']) . "</a>";
 						}
-						DB::query("INSERT INTO " . DB::table('newz_data') . " (uid,touid,icon,text,time,ip) VALUES (" . $_G['uid'] . ",0,'bot','" . $msg . "'," . time() . ",'" . $_G['clientip'] . "')");
+						DB::insert(
+							'newz_data',
+							array(
+								'uid' => $_G['uid'],
+								'touid' => 0,
+								'icon' => 'bot',
+								'text' => $msg,
+								'time' => time(),
+								'ip' => $_G['clientip']
+							)
+						);
 					}
 				}
 			}

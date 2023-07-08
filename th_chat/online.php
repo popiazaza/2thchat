@@ -34,7 +34,7 @@ if ($_G['setting']['version'] > "X3.4") {
     );
 }
 if ($_G['uid']) {
-    if (DB::fetch_first('SELECT uid FROM ' . DB::table('common_session') . ' WHERE uid=\'' . $_G['uid'] . '\'')) {
+    if (DB::fetch_first('SELECT `uid` FROM ' . DB::table('common_session') . ' WHERE `uid`=\'' . $_G['uid'] . '\'')) {
         DB::update('common_session', $dataarr, "`uid`='" . $_G['uid'] . "'");
     } else {
         DB::insert('common_session', $dataarr, false, false, true);
