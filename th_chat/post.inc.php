@@ -7,7 +7,7 @@ $config = $_G['cache']['plugin']['th_chat'];
 $uid = $_G['uid'];
 $gid = $_G['groupid'];
 $is_mod = in_array($_G['adminid'], array(1, 2, 3));
-require './class/class_THChatMessage.php';
+require_once libfile('class/THChatMessage', 'plugin/th_chat');
 $msg_func = new THChatMessage();
 function error_response($error, $script = '')
 {
