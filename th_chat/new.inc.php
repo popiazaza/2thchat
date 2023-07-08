@@ -7,7 +7,8 @@ $config = $_G['cache']['plugin']['th_chat'];
 $uid = $_G['uid'];
 $id = intval($_POST['lastid']);
 $is_mod = in_array($_G['adminid'], array(1, 2, 3));
-include 'functions.php';
+require './class/class_THChatMessage.php';
+$msg_func = new THChatMessage();
 $room = intval($_POST['room']);
 if ($room) {
     DB::update('newz_data', array(
@@ -78,7 +79,7 @@ while ($c = DB::fetch($re)) {
     } elseif ($c['uid'] == $uid) {
         $c['text'] = '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     }
-    $body[$c['id']] .= chatrow($c['id'], $c['text'], $c['uid'], $c['name'], $c['time'], $c['touid'], $c['icon'], $is_mod);
+    $body[$c['id']] .= $msg_func->chat_row($c['id'], $c['text'], $c['uid'], $c['name'], $c['time'], $c['icon'], $is_mod);
     if ($c['ip'] == 'clear') {
         break;
     }

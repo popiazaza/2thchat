@@ -7,7 +7,8 @@ $config = $_G['cache']['plugin']['th_chat'];
 $uid = $_G['uid'];
 $gid = $_G['groupid'];
 $is_mod = in_array($_G['adminid'], array(1, 2, 3));
-include 'functions.php';
+require './class/class_THChatMessage.php';
+$msg_func = new THChatMessage();
 function error_response($error, $script = '')
 {
     $response =
@@ -59,7 +60,7 @@ if (substr($text, 0, 4) == "!del" && $is_mod) {
     } else {
         $time = TIMESTAMP + $time;
     }
-    if (DB::fetch_first("SELECT `uid` FROM " . DB::table('newz_nick') . " WHERE `uid`='{$uid_ban}'")) {
+    if (DB::fetch_first("SELECT uid FROM " . DB::table('newz_nick') . " WHERE `uid`='{$uid_ban}'")) {
         DB::update('newz_nick', array(
             'ban' => $time,
         ), DB::field('uid', $uid_ban));
@@ -69,7 +70,7 @@ if (substr($text, 0, 4) == "!del" && $is_mod) {
             'ban' => $time,
         ));
     }
-    $username_ban = DB::fetch_first("SELECT `username` FROM " . DB::table('common_member') . " WHERE `uid`='{$uid_ban}'");
+    $username_ban = DB::fetch_first("SELECT username FROM " . DB::table('common_member') . " WHERE uid='{$uid_ban}'");
     $username_ban = '@' . $username_ban['username'];
     $icon = 'alert';
     $touid = 0;
@@ -80,7 +81,7 @@ if (substr($text, 0, 4) == "!del" && $is_mod) {
     DB::update('newz_nick', array(
         'ban' => 0,
     ), DB::field('uid', $uid_ban));
-    $username_ban = DB::fetch_first("SELECT `username` FROM " . DB::table('common_member') . " WHERE `uid`='{$uid_ban}'");
+    $username_ban = DB::fetch_first("SELECT username FROM " . DB::table('common_member') . " WHERE uid='{$uid_ban}'");
     $username_ban = '@' . $username_ban['username'];
     $icon = 'alert';
     $touid = 0;
@@ -190,19 +191,19 @@ if (($is_mod > 0) && $text == '!clear') {
     $text = 'ล้างข้อมูล';
     $needClear = 1;
 }
-$text = getat(addcslashes($text, "'"));
+$text = $msg_func->get_at(addcslashes($text, "'"));
 if ($ip == 'edit') {
     preg_match('/\[quota\](.*?)\[\/quota\]/', $editmsg['text'], $editquota);
     if ($editquota[0]) {
         $text = addslashes($editquota[0]) . $text;
     }
-    $text .= ' <span class="nztag3" title="' . get_date($time) . '">' . $edittext . '</span>';
+    $text .= ' <span class="nztag3" title="' . $msg_func->get_date($time) . '">' . $edittext . '</span>';
     DB::update('newz_data', array(
         'text' => $text,
     ), DB::field('id', $icon));
 }
 if ($quota > 0 && $ip != 'clear') {
-    $text = getquota($quota) . $text;
+    $text = $msg_func->get_quota($quota) . $text;
 }
 $unread = 0;
 if ($touid !== 0) {
@@ -279,7 +280,7 @@ while ($c = DB::fetch($re)) {
     } elseif ($c['uid'] == $uid) {
         $c['text'] = '<span id="nzchatcontent' . $c['id'] . '">' . $c['text'] . '</span>';
     }
-    $body[$c['id']] .= chatrow($c['id'], $c['text'], $c['uid'], $c['name'], $c['time'], $c['touid'], $c['icon'], $is_mod);
+    $body[$c['id']] .= $msg_func->chat_row($c['id'], $c['text'], $c['uid'], $c['name'], $c['time'], $c['icon'], $is_mod);
     if ($c['ip'] == 'clear') {
         break;
     }
