@@ -1,5 +1,6 @@
 <?php
-$time = TIMESTAMP;
+require_once libfile('class/THChatMessage', 'plugin/th_chat');
+$msg_func = new THChatMessage();
 if ($_G['setting']['version'] > "X3.4") {
     $dataarr = array(
         'sid' => $_G['session']['sid'],
@@ -9,7 +10,7 @@ if ($_G['setting']['version'] > "X3.4") {
         'groupid' => $_G['member']['groupid'],
         'invisible' => $_G['member']['invisible'],
         'action' => APPTYPEID,
-        'lastactivity' => $time,
+        'lastactivity' => TIMESTAMP,
         'lastolupdate' => 0,
         'fid' => 0,
         'tid' => 0,
@@ -27,7 +28,7 @@ if ($_G['setting']['version'] > "X3.4") {
         'groupid' => $_G['member']['groupid'],
         'invisible' => $_G['member']['invisible'],
         'action' => APPTYPEID,
-        'lastactivity' => $time,
+        'lastactivity' => TIMESTAMP,
         'lastolupdate' => 0,
         'fid' => 0,
         'tid' => 0,
@@ -73,7 +74,7 @@ if ($_POST['list']) {
 							</div>
 							<div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><span class="nznametop2 nzat_' . $r['touid'] . '" id="nzolpro_' . $r['touid'] . '" style="cursor:pointer' . ($r['tocolor'] ? ';color:' . $r['tocolor'] : '') . '">' . $r['toname'] . '</span><br>
 								<span id="nzchatolr' . $r['touid'] . '">
-									<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span>
+									<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . $msg_func->get_date($r['maxtime']) . '</span>
 									<script>nzchatobj("#nzchatolr' . $r['touid'] . ' span.nztime").timeago();</script>
 								</span>
 							</div>
@@ -89,7 +90,7 @@ if ($_POST['list']) {
 							</div>
 							<div style="display:inline-block;vertical-align: top;margin-left:10px;position:relative;height:32px;line-height: 15px;"><span class="nznametop2 nzat_' . $r['uid'] . '" id="nzolpro_' . $r['uid'] . '" style="cursor:pointer' . ($r['color'] ? ';color:' . $r['color'] : '') . '">' . $r['name'] . '</span><br>
 								<span id="nzchatolr' . $r['uid'] . '">
-									' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . get_date($r['maxtime']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
+									' . ($r['count'] ? '<span class="nzunread">' . $r['count'] . ' ข้อความใหม่</span>' : '<span class="nztime" title="' . date("c", $r['maxtime']) . '">' . $msg_func->get_date($r['maxtime']) . '</span><script>nzchatobj("#nzchatolr' . $r['uid'] . ' span.nztime").timeago();</script>') . '
 								</span>
 							</div>
 						</div>
@@ -103,7 +104,7 @@ if ($_POST['list']) {
     } else {
         $body_onlinez = '<br><div style="color:#fff;text-align:center;">กรุณาเข้าสู่ระบบ<br>เพื่อใช้งานแชทส่วนตัว</div>';
     }
-    $oltotal = DB::fetch_first("SELECT count(*) as count FROM " . DB::table('common_session') . " WHERE uid>0 AND invisible=0 AND action IN (2,127) AND fid=0 AND tid=0 AND lastactivity>" . ($time - $timeout));
+    $oltotal = DB::fetch_first("SELECT count(*) as count FROM " . DB::table('common_session') . " WHERE uid>0 AND invisible=0 AND action IN (2,127) AND fid=0 AND tid=0 AND lastactivity>" . (TIMESTAMP - $timeout));
     $oltotal = $oltotal['count'];
     $body_online = $body_onlinez;
 } else {
@@ -126,13 +127,13 @@ if ($_POST['list']) {
         $botid = explode(",", $config['onlinebot']);
         if (in_array($r['uid'], $botid)) {
             if (empty($r['lastactivity'])) {
-                $r['lastactivity'] = $time;
+                $r['lastactivity'] = TIMESTAMP;
             } else {
                 continue;
             }
         }
-        $r['groupid'] += $time - $r['lastactivity'] > $timeout ? 100 : 0;
-        if ($time - $r['lastactivity'] > $timeout) {
+        $r['groupid'] += TIMESTAMP - $r['lastactivity'] > $timeout ? 100 : 0;
+        if (TIMESTAMP - $r['lastactivity'] > $timeout) {
             $oltotal = $oltotal - 1;
         } else {
             $body_onlinein[$r['groupid']] .= '<div class="nzolcon"><div class="nzolname" onMouseOver="nzchatobj(\'#nzchatolc' . $r['uid'] . '\').show();nzchatobj(\'#nzchatolr' . $r['uid'] . '\').hide();" onMouseOut="nzchatobj(\'#nzchatolc' . $r['uid'] . '\').hide();nzchatobj(\'#nzchatolr' . $r['uid'] . '\').show();">
