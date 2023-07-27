@@ -1,8 +1,6 @@
 var nzchatobj = jQuery.noConflict();
 
 var nzsid = getcookie("sid", true);
-var nztime1 = new Date().getTime();
-var nztime2 = 0;
 var nztouid = 0;
 var nzquota = 0;
 var nzlastid = 0;
@@ -195,64 +193,58 @@ function nzSend() {
   if (data === "") {
     return false;
   }
-  nztime1 = new Date().getTime();
-  if (nztime1 > nztime2) {
-    nzchatobj("#nzchatmessage").val("");
-    nztime2 = nztime1 + nzsetting.delay;
-    nzchatobj.post(
-      "plugin.php?id=th_chat:post" + formhash,
-      {
-        text: data,
-        lastid: nzlastid,
-        touid: nztouid,
-        quota: nzquota,
-        command: nzcommandz,
-        room: nzChatRoom,
-      },
-      function (data) {
-        if (
-          nzquota > 0 ||
-          nzcommandz == "notice" ||
-          nzcommandz.substring(0, 4) == "edit"
-        ) {
-          nzTouid(nztouid);
+  nzchatobj("#nzchatmessage").val("");
+  nzchatobj.post(
+    "plugin.php?id=th_chat:post" + formhash,
+    {
+      text: data,
+      lastid: nzlastid,
+      touid: nztouid,
+      quota: nzquota,
+      command: nzcommandz,
+      room: nzChatRoom,
+    },
+    function (data) {
+      if (
+        nzquota > 0 ||
+        nzcommandz == "notice" ||
+        nzcommandz.substring(0, 4) == "edit"
+      ) {
+        nzTouid(nztouid);
+      }
+      data = JSON.parse(data);
+      if (data.type == 1) {
+        nzalert(data.error);
+        if (data.script) {
+          eval(data.script);
         }
-        data = JSON.parse(data);
-        if (data.type == 1) {
-          nzalert(data.error);
-          if (data.script) {
-            eval(data.script);
+      } else {
+        if (nztouid == nzChatRoom) {
+          var listmess = nzSortObject(data);
+          nzReadyForScroll();
+          nzchatobj.each(listmess, function (k, v) {
+            k = parseInt(k);
+            if (k > nzlastid) {
+              nzlastid = k;
+              nzchatobj("#afterme").before(v);
+              nzScrollChat();
+            }
+          });
+          nzchatobj(".nzinnercontent img").one("load", function () {
+            nzScrollChat();
+          });
+          if (nzsetting.iscleardata == 1) {
+            var nzchatrr = nzchatobj(".nzchatrow");
+            if (nzchatrr.size() > nzsetting.chatrowmax) {
+              nzchatrr.first().remove();
+            }
           }
         } else {
-          if (nztouid == nzChatRoom) {
-            var listmess = sortObject(data);
-            nzReadyForScroll();
-            nzchatobj.each(listmess, function (k, v) {
-              k = parseInt(k);
-              if (k > nzlastid) {
-                nzlastid = k;
-                nzchatobj("#afterme").before(v);
-                nzScrollChat();
-              }
-            });
-            nzchatobj(".nzinnercontent img").one("load", function () {
-              nzScrollChat();
-            });
-            if (nzsetting.iscleardata == 1) {
-              var nzchatrr = nzchatobj(".nzchatrow");
-              if (nzchatrr.size() > nzsetting.chatrowmax) {
-                nzchatrr.first().remove();
-              }
-            }
-          } else {
-            nzChangeChatRoom(nztouid);
-          }
+          nzChangeChatRoom(nztouid);
         }
       }
-    );
-  } else {
-    nzalert("ส่งข้อความบ่อยไป");
-  }
+    }
+  );
 }
 
 function nzCommand(command, xid) {
@@ -390,7 +382,7 @@ function nzLoadText() {
     },
     function (data) {
       data = JSON.parse(data);
-      var listmess = sortObject(data.chat_row);
+      var listmess = nzSortObject(data.chat_row);
       nzReadyForScroll();
       nzchatobj.each(listmess, function (k, v) {
         k = parseInt(k);
@@ -564,7 +556,7 @@ function nzCheckImg(i) {
   }
 }
 
-function sortObject(a) {
+function nzSortObject(a) {
   var b = {},
     c,
     d = [];
