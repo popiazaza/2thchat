@@ -34,7 +34,7 @@ class THChatMessage
 			$quo = DB::fetch($quo);
 			$quo['text'] = preg_replace('/\[quota\](.*?)\[\/quota\]/', '', $quo['text']);
 			$attext = $this->get_at3($quo['uid']);
-			$text = '[quota]' . addslashes('<div class="nzblockquote">' . $attext . ': ' . $quo['text'] . '</div>') . '[/quota]';
+			$text = '[quota]<div class="nzblockquote">' . $attext . ': ' . $quo['text'] . '</div>[/quota]';
 		}
 		return $text;
 	}
