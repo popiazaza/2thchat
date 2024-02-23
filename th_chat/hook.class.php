@@ -20,7 +20,7 @@ class plugin_th_chat_forum
 			loadcache('plugin');
 			$config = $_G['cache']['plugin']['th_chat'];
 			$forums = unserialize($config['category_post']);
-			if (in_array($_GET['fid'], $forums)) {
+			if ($forums && in_array($_GET['fid'], $forums)) {
 				if ($config['new_post'] > 0 && $_GET['action'] == 'newthread') {
 					if ($config['new_post'] > 1) {
 						return '<input type="checkbox" id="th_chat_notify" name="th_chat_notify" value="1"' . ($config['new_post'] == 2 ? ' checked' : '') . '><label for="th_chat_notify"> โพสต์กระทู้นี้ไปยังห้องแชท</label><br>';
@@ -41,7 +41,7 @@ class plugin_th_chat_forum
 		$config = $_G['cache']['plugin']['th_chat'];
 		if ($config['new_post'] > 0 && $args['param'][0] == 'post_newthread_succeed') {
 			$forums = unserialize($config['category_post']);
-			if (in_array($args['param'][2]['fid'], $forums)) {
+			if ($forums && in_array($args['param'][2]['fid'], $forums)) {
 				if ($config['new_post'] == 1 || $_POST['th_chat_notify']) {
 					if ($post = DB::fetch_first("SELECT * FROM " . DB::table('forum_post') . " WHERE `fid` = " . $args['param'][2]['fid'] . " AND `tid` = " . $args['param'][2]['tid'] . " AND `pid` = " . $args['param'][2]['pid'])) {
 						$msg = "โพสต์ <a target=\"_blank\" href=\"forum.php?mod=viewthread&tid=" . $post['tid'] . "\">" . addslashes($post['subject']) . "</a>";
@@ -65,7 +65,7 @@ class plugin_th_chat_forum
 			}
 		} else if ($config['edit_post'] > 0 && $args['param'][0] == 'post_edit_succeed') {
 			$forums = unserialize($config['category_post']);
-			if (in_array($args['param'][2]['fid'], $forums)) {
+			if ($forums && in_array($args['param'][2]['fid'], $forums)) {
 				if ($config['edit_post'] == 1 || $_POST['th_chat_notify']) {
 					if ($post = DB::fetch_first("SELECT * FROM " . DB::table('forum_post') . " WHERE `fid` = " . $args['param'][2]['fid'] . " AND `tid` = " . $args['param'][2]['tid'] . " AND `pid` = " . $args['param'][2]['pid'])) {
 						$msg = "อัปเดตโพสต์ <a target=\"_blank\" href=\"forum.php?mod=viewthread&tid=" . $post['tid'] . "\">" . addslashes($post['subject']) . "</a>";
