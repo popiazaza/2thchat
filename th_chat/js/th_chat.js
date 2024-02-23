@@ -140,24 +140,25 @@ nzchatobj(function () {
   if (nzsetting.autoconnect == 1) {
     nzLoadTextInit();
   }
-  const nzemoji = document.querySelector("#nzemoji");
-  const nzpicker = picmoPopup.createPopup(
-    {
-      rootElement: document.querySelector("#nzchat"),
-      theme: `picmo__${nzsetting.theme}`,
+  const nzemoji_popup = document.querySelector("#nzemoji_popup");
+  const pickerOptions = {
+    onEmojiSelect: (selection) => {
+      nzchatobj("#nzchatmessage").val(
+        nzchatobj("#nzchatmessage").val() + selection.native
+      );
+      nzchatobj("#nzemoji_popup").hide();
     },
-    {
-      referenceElement: nzemoji,
-      triggerElement: nzemoji,
-    }
-  );
-  nzpicker.addEventListener("emoji:select", (selection) => {
-    nzchatobj("#nzchatmessage").val(
-      nzchatobj("#nzchatmessage").val() + selection.emoji
-    );
-  });
+    theme: nzsetting.theme,
+  };
+  const picker = new EmojiMart.Picker(pickerOptions);
+  nzemoji_popup.appendChild(picker);
   nzchatobj("#nzemoji").on("click", function () {
-    nzpicker.toggle();
+    nzchatobj("#nzemoji_popup").toggle();
+  });
+  window.addEventListener("click", function (e) {
+    if (!nzemoji_popup.contains(e.target) && e.target.id !== "nzemoji") {
+      nzchatobj("#nzemoji_popup").hide();
+    }
   });
   nzchatobj("#nznewmessage").on("click", function () {
     nzScrollChat(true);

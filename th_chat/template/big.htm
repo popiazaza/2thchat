@@ -7,8 +7,7 @@
 <!--{else}-->
 <script src="source/plugin/th_chat/js/jquery-3.7.1.min.js"></script>
 <script src="source/plugin/th_chat/js/jquery.timeago.js"></script>
-<script src="source/plugin/th_chat/js/picmo.js"></script>
-<script src="source/plugin/th_chat/js/picmo-popup.js"></script>
+<script src="source/plugin/th_chat/js/emoji-mart-5.5.2.js"></script>
 <link rel="stylesheet" type="text/css" href="{$_G[setting][csspath]}{STYLEID}_forum_viewthread.css?{VERHASH}" />
 <link rel="stylesheet" type="text/css"
   href="source/plugin/th_chat/template/th_chat.min.css?v=<!--{$_G['setting']['plugins']['version']['th_chat']}-->" />
@@ -93,6 +92,7 @@ font-weight: bold;">คลิกที่นี่เพื่อเข้าส
           <div id="nzimgup" title="อัปโหลดรูปภาพ"></div>
           <!--{if $_G['config']['db']['1']['dbcharset'] == 'utf8mb4'}-->
           <div id="nzemoji" title="Emoji"></div>
+          <div id="nzemoji_popup"></div>
           <!--{/if}--><input name="mtname" type="text" id="nzchatmessage" maxlength="{$chat['chat_strlen']}"
             placeholder="กรอกข้อความแล้วกดปุ่ม Enter เพื่อส่งข้อความ" />
         </div>
