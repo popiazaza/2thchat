@@ -687,4 +687,5 @@ a.nzca:hover {
   margin-top: 24px;
   margin-left: 24px;
   position: absolute;
+  z-index: 2;
 }

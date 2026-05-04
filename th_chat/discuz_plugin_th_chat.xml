@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="ISO-8859-1"?>
 <root>
 	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
-	<item id="Version"><![CDATA[X3.5]]></item>
-	<item id="Time"><![CDATA[2021-1-1 00:00]]></item>
+	<item id="Version"><![CDATA[X5.0]]></item>
+	<item id="Time"><![CDATA[2026-05-04 00:00]]></item>
 	<item id="From"><![CDATA[https://www.discuz.in.th]]></item>
 	<item id="Data">
 		<item id="plugin">
@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[th_chat/]]></item>
 			<item id="copyright"><![CDATA[newz & popiazaza]]></item>
-			<item id="version"><![CDATA[3.5.0]]></item>
+			<item id="version"><![CDATA[3.6.0]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[hook]]></item>
@@ -26,7 +26,7 @@
 				</item>
 			</item>
 		</item>
-		<item id="version"><![CDATA[X1.0,X1.5,X2.0,X2.5,X3.0,X3.1,X3.2,X3.3,X3.4,X3.5]]></item>
+		<item id="version"><![CDATA[X1.0,X1.5,X2.0,X2.5,X3.0,X3.1,X3.2,X3.3,X3.4,X3.5,X5.0]]></item>
 		<item id="license"><![CDATA[]]></item>
 		<item id="installfile"><![CDATA[install.php]]></item>
 		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
