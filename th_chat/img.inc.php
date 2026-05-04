@@ -4,6 +4,34 @@ if (!defined('IN_DISCUZ')) {
 }
 loadcache('plugin');
 $config = $_G['cache']['plugin']['th_chat'];
+
+function cleanup_old_images($cleanup_days) {
+	if ($cleanup_days <= 0) {
+		return;
+	}
+	
+	$img_up_path = __DIR__ . '/img_up';
+	if (!is_dir($img_up_path)) {
+		return;
+	}
+	
+	$cutoff_time = time() - ($cleanup_days * 24 * 60 * 60);
+	$files = glob($img_up_path . '/*');
+	
+	foreach ($files as $file) {
+		if (is_file($file)) {
+			$file_time = filemtime($file);
+			if ($file_time < $cutoff_time) {
+				unlink($file);
+			}
+		}
+	}
+}
+
+if (isset($config['image_cleanup_days']) && $config['image_cleanup_days'] > 0) {
+	cleanup_old_images(intval($config['image_cleanup_days']));
+}
+
 if ($_G['uid'] < 1) {
 	die('Login');
 }

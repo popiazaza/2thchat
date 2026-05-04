@@ -338,6 +338,16 @@ dark = มืด]]></item>
 				<item id="value"><![CDATA[0]]></item>
 				<item id="extra"><![CDATA[]]></item>
 			</item>
+			<item id="41">
+				<item id="displayorder"><![CDATA[41]]></item>
+				<item id="title"><![CDATA[ลบรูปภาพเก่าอัตโนมัติ]]></item>
+				<item id="description"><![CDATA[จำนวนวันที่จะเก็บรูปภาพไว้ หากรูปภาพเก่ากว่าจำนวนวันที่กำหนดจะถูกลบทิ้ง
+ใส่ 0 ถ้าไม่ต้องการลบรูปภาพเก่าทิ้ง]]></item>
+				<item id="variable"><![CDATA[image_cleanup_days]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[0]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
 		</item>
 	</item>
 </root>
