@@ -236,7 +236,7 @@ function nzSend() {
           });
           if (nzsetting.iscleardata == 1) {
             var nzchatrr = nzchatobj(".nzchatrow");
-            if (nzchatrr.size() > nzsetting.chatrowmax) {
+            if (nzchatrr.length > nzsetting.chatrowmax) {
               nzchatrr.first().remove();
             }
           }
@@ -398,7 +398,7 @@ function nzLoadText() {
       });
       if (nzsetting.iscleardata == 1) {
         var nzchatrr = nzchatobj(".nzchatrow");
-        if (nzchatrr.size() > nzsetting.chatrowmax) {
+        if (nzchatrr.length > nzsetting.chatrowmax) {
           nzchatrr.first().remove();
         }
       }
