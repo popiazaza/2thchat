@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redirect requests for missing images to /images/not_found.jpg
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^/img_up/(.+)\.(jpg|jpeg|png|gif)$ [NC]
+RewriteRule ^(.*)$ /images/not_found.jpg [L]
